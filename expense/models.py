@@ -15,6 +15,7 @@ class Envelope(models.Model):
 class Receipt(models.Model):
     user = models.ForeignKey(User)
     envelope = models.ForeignKey(Envelope)
+    name = models.CharField(max_length=120, null=True, blank=True)
     amount = models.DecimalField(max_digits=15, decimal_places=2)
     date = models.DateField(auto_now_add=True)
 

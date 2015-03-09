@@ -9,9 +9,14 @@
  */
 angular.module('budgetmeApp')
   .controller('MainCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+    $scope.state = '';
+    $scope.toggle =  function(){
+    	if ($scope.state === ''){
+    		$scope.state = 'toggled';
+    		console.log('clicked');
+    	}
+    	else {
+    		$scope.state = '';
+		}
+    };
   });
