@@ -1,0 +1,8 @@
+node_modules
+dist
+.tmp
+.sass-cache
+bower_components
+local_settings.py
+local_settings.pyc
+db.sqlite3
