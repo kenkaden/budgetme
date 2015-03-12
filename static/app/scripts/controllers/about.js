@@ -14,4 +14,8 @@ angular.module('budgetmeApp')
       'AngularJS',
       'Karma'
     ];
+    $scope.handleClick = function(msg){
+    	$scope.$emit('updateEnvelope', { message: "msg from about"});
+    	console.log("handleClick clicked");
+    };
   });

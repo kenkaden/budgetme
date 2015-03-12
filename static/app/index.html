@@ -13,7 +13,7 @@
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/simple-sidebar.css"
+    <link rel="stylesheet" href="styles/simple-sidebar.css">
     <!-- endbuild -->
   </head>
   <body ng-app="budgetmeApp">
@@ -22,14 +22,14 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div ng-controller="MainCtrl" id="wrapper" class="{{state}}">
+    <div ng-controller="MainCtrl" id="wrapper">
 
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
                     <a href="#">
-                        Start Bootstrap {{logname}}
+                        Start Bootstrap <span ng-bind="loginName"</span>
                     </a>
                 </li>
                 <li>
@@ -54,18 +54,24 @@
                     <a href="#">Contact</a>
                 </li>
                 <li>
-                    <select ng-model="envelopeOption" class="selectpicker">
-                        <option ng-repeat="item in envelopeArray" value="{{item}}">{{item}}</option>
-                    </select>
-                </li>
-                <li>
-                    <button ng-click="expenseSubmit(envelopeOption)">Submit</button>
+                    <form name="expenseEntry" class="form-horizontal">
+                        <input ng-model="expenseName" name="expense_name" class="form-control input-lg formspace" type="text" placeholder="Expense Name" required>
+
+                        <input ng-model="expenseAmount" name="expense_amount" class="form-control input-lg formspace" type="number" placeholder="Expense Amount" min="1" required>
+
+                        <select ng-model="envelopeOption" name="envelope_option" class="form-control input-lg formspace" ng-options="item for item in envelopeArray" required>
+                            <option></option>
+                        </select>
+                    </form>
+                    <button class="btn btn-primary btn-lg formspace" type="button" ng-click="expenseSubmit(expenseName, expenseAmount, envelopeOption)">Submit</button>
+                    <span ng-show="problem">You are missing a field</span>
                 </li>
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
 
     <a class="btn btn-default" ng-click="toggle()">Toggle Menu</a>
+
 
         <div id="page-content-wrapper">
             <div ng-view=""></div>

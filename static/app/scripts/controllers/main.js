@@ -22,8 +22,39 @@ angular.module('budgetmeApp')
   .factory('EnvelopeFactory', function($http){ 
     return $http.get('/api/expense/list_envelope/');
     })
-  .controller('MainCtrl', function ($scope, ExpenseService, EnvelopeFactory, $q) {
-    $scope.state = '';
+  .factory('UsernameFactory', function($http, $q){ 
+    return {
+        getUser: function() {
+            var nameDeferred = $q.defer();
+            $http.get('/api/baseinfo/update/').success(function(data){
+                nameDeferred.resolve(data.user.username);
+            });
+            return nameDeferred.promise;
+        }
+      }
+    })
+  .controller('MainCtrl', function ($scope, ExpenseService, EnvelopeFactory, UsernameFactory, $q, $http) {
+    $scope.problem = false; 
+    $scope.loginName ='';
+
+    $scope.$on('updateEnvelope', function(event, args){
+        var updateDeferred = $q.defer();
+        $scope.message = args.message;
+        console.log($scope.message);
+        $http.get('/api/expense/list_envelope/').success(function(data){
+        $scope.envelopeArray = [];
+            for (var i=0; i < data.length; i++) {
+                $scope.envelopeArray.push(data[i].name);
+                updateDeferred.resolve($scope.envelopeArray);
+                }
+        })
+        return updateDeferred.promise;
+    });
+
+    
+    UsernameFactory.getUser().then(function(data){
+        $scope.loginName = data;
+    });
 
     var getEnvelopes = function(){
     var deferred = $q.defer();  
@@ -37,17 +68,24 @@ angular.module('budgetmeApp')
             return deferred.promise;
     };
 
-    getEnvelopes();
+    getEnvelopes().then(function(){
+        $scope.envelopeOption = $scope.envelopeArray[0];
+    });
 
-    $scope.toggle =  function(){
-    	if ($scope.state === ''){
-    		$scope.state = 'toggled';
-    	}
-    	else {
-    		$scope.state = '';
-		}
+    $scope.toggle = function() {
+     var myEl = angular.element( document.querySelector( '#wrapper' ) );
+     myEl.toggleClass('toggled');     
     };
 
-    $scope.expenseSubmit = function(name){console.log(name)};
+    $scope.expenseSubmit = function(name, amount, envelope){
+        if (name !== undefined || amount !== undefined) {
+        console.log(name + ' ' + amount + ' ' + envelope);
+        $scope.problem = false;
+    } 
+    else {
+        console.log('Missing field');
+        $scope.problem = true;
+    }
+    };
 
   });
