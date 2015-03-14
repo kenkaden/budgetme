@@ -2,7 +2,7 @@
 <html class="no-js">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Budget Me</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -28,9 +28,7 @@
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
-                    <a href="#">
-                        Start Bootstrap <span ng-bind="loginName"</span>
-                    </a>
+                    <a href="#">Welcome Back <span ng-bind="loginName"></span></a> 
                 </li>
                 <li>
                     <a href="#/">Dashboard</a>
@@ -39,32 +37,35 @@
                     <a href="#">Envelope</a>
                 </li>
                 <li>
-                    <a href="#">Expenses</a>
-                </li>
-                <li>
-                    <a href="#">Events</a>
+                    <a href="#/expense">Expenses</a>
                 </li>
                 <li>
                     <a href="#/about">About</a>
                 </li>
                 <li>
-                    <a href="#">Services</a>
-                </li>
-                <li>
                     <a href="#">Contact</a>
                 </li>
                 <li>
-                    <form name="expenseEntry" class="form-horizontal">
-                        <input ng-model="expenseName" name="expense_name" class="form-control input-lg formspace" type="text" placeholder="Expense Name" required>
+                    <a href="#/logout">Logout</a>
+                </li>
+                <li>
+                    <form name="expenseEntry" class="form-horizontal" novalidate>
+                        <div class="formExpense">
+                        <input ng-model="expenseName" name="expense_name" class="form-control input-lg" type="text" placeholder="Expense Name"  required>
+                        </div>
 
-                        <input ng-model="expenseAmount" name="expense_amount" class="form-control input-lg formspace" type="number" placeholder="Expense Amount" min="1" required>
+                        <div class="formAmount">
+                        <input ng-model="expenseAmount" name="expense_amount" class="form-control input-lg" type="number" placeholder=0.00 min="1" step="0.01" required>
+                        <span ng-hide="!expenseEntry.expense_amount.$error.number" class="formAlert">Must be a number.</span>
+                        </div>
 
-                        <select ng-model="envelopeOption" name="envelope_option" class="form-control input-lg formspace" ng-options="item for item in envelopeArray" required>
+                        <div class="formEnvelope">
+                        <select ng-model="envelopeOption" name="envelope_option" class="form-control input-lg" ng-options="item for item in envelopeArray" required>
                             <option></option>
                         </select>
+                        </div>
                     </form>
-                    <button class="btn btn-primary btn-lg formspace" type="button" ng-click="expenseSubmit(expenseName, expenseAmount, envelopeOption)">Submit</button>
-                    <span ng-show="problem">You are missing a field</span>
+                    <button class="btn btn-primary btn-lg formButton" ng-disabled="expenseEntry.$invalid" type="button" ng-click="expenseSubmit(expenseName, expenseAmount, envelopeOption)" ng-bind="submitStatus"></button>
                 </li>
             </ul>
         </div>
@@ -112,6 +113,8 @@
         <script src="scripts/controllers/login.js"></script>
         <script src="scripts/controllers/logout.js"></script>
         <script src="scripts/controllers/register.js"></script>
+        <script src="scripts/controllers/envelope.js"></script>
+        <script src="scripts/controllers/expense.js"></script>
         <!-- endbuild -->
 </body>
 </html>

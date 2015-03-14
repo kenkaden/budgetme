@@ -27,15 +27,22 @@ angular.module('budgetmeApp')
         getUser: function() {
             var nameDeferred = $q.defer();
             $http.get('/api/baseinfo/update/').success(function(data){
-                nameDeferred.resolve(data.user.username);
+                var userDetail = {
+                    'username': data.user.username,
+                    'id': data.user.id
+                };
+                nameDeferred.resolve(userDetail);
             });
             return nameDeferred.promise;
         }
-      }
+      };
     })
-  .controller('MainCtrl', function ($scope, ExpenseService, EnvelopeFactory, UsernameFactory, $q, $http) {
-    $scope.problem = false; 
+  .controller('MainCtrl', function ($scope, ExpenseService, EnvelopeFactory, UsernameFactory, $q, $http, $timeout) {
+    $scope.problem = ''; 
     $scope.loginName ='';
+    $scope.loginId = '';
+    $scope.nameError = 'Expense Name';
+    $scope.submitStatus = 'Submit';
 
     $scope.$on('updateEnvelope', function(event, args){
         var updateDeferred = $q.defer();
@@ -45,15 +52,16 @@ angular.module('budgetmeApp')
         $scope.envelopeArray = [];
             for (var i=0; i < data.length; i++) {
                 $scope.envelopeArray.push(data[i].name);
-                updateDeferred.resolve($scope.envelopeArray);
                 }
-        })
+            updateDeferred.resolve($scope.envelopeArray);
+        });
         return updateDeferred.promise;
     });
 
     
     UsernameFactory.getUser().then(function(data){
-        $scope.loginName = data;
+        $scope.loginName = data.username;
+        $scope.loginId = data.id;
     });
 
     var getEnvelopes = function(){
@@ -62,8 +70,8 @@ angular.module('budgetmeApp')
         $scope.envelopeArray = [];
             for (var i=0; i < data.length; i++) {
                 $scope.envelopeArray.push(data[i].name);
-                deferred.resolve($scope.envelopeArray);
                 }
+            deferred.resolve($scope.envelopeArray);
         });
             return deferred.promise;
     };
@@ -73,19 +81,32 @@ angular.module('budgetmeApp')
     });
 
     $scope.toggle = function() {
-     var myEl = angular.element( document.querySelector( '#wrapper' ) );
-     myEl.toggleClass('toggled');     
-    };
+             var myEl = angular.element( document.querySelector( '#wrapper' ) );
+             myEl.toggleClass('toggled');     
+        };
 
     $scope.expenseSubmit = function(name, amount, envelope){
-        if (name !== undefined || amount !== undefined) {
-        console.log(name + ' ' + amount + ' ' + envelope);
-        $scope.problem = false;
-    } 
-    else {
-        console.log('Missing field');
-        $scope.problem = true;
-    }
-    };
+        var data = {
+            "name" : name,
+            "amount" : amount,
+            "user" : $scope.loginId,
+            "envelope": envelope
+        };
 
+        function submitStatusTimeout(){
+            $scope.submitStatus = 'Submit';
+        };
+
+        $http.post('/api/expense/create_receipt/', data)
+        .success(function(data){
+            $scope.$broadcast('updateExpense', { message: 'msg from expense'});
+            $scope.submitStatus = 'Submitted';
+            $scope.expenseAmount = '';
+            $scope.expenseName = '';
+            $timeout(submitStatusTimeout, 3000);
+        })
+        .error(function(error){
+            console.log('This is the post error' + error);
+        });
+      };
   });

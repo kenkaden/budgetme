@@ -9,7 +9,7 @@ class Envelope(models.Model):
     name = models.CharField(max_length=120)
 
     def __unicode__(self):
-        return u"User: {}, Envelop Name: {}".format(self.user, self.name)
+        return u"id:{}, user: {}, envelope: {}".format(self.pk, self.user, self.name)
 
 
 class Receipt(models.Model):

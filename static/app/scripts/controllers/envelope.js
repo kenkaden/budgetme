@@ -8,7 +8,7 @@
  * Controller of the budgetmeApp
  */
 angular.module('budgetmeApp')
-  .controller('AboutCtrl', function ($scope) {
+  .controller('EnvelopeCtrl', function ($scope) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',

@@ -22,6 +22,12 @@ angular
       .when('/', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
+      }).when('/envelope', {
+        templateUrl: 'views/envelope.html',
+        controller: 'EnvelopeCtrl'
+      }).when('/expense', {
+        templateUrl: 'views/expense.html',
+        controller: 'ExpenseCtrl'
       })
       .when('/about', {
         templateUrl: 'views/about.html',
