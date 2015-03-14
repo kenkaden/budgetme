@@ -11,7 +11,7 @@ angular.module('budgetmeApp')
   .factory('ReceiptFactory', function($http){ 
     return $http.get('/api/expense/list_receipt/');
     })
-  .controller('ExpenseCtrl', function ($scope, $q, $http, $location, $timeout, ReceiptFactory) {
+  .controller('ExpenseCtrl', function ($scope, $http, $location, $timeout, ReceiptFactory) {
     $scope.editStatus = false;
     $scope.receiptSaved = "Save";
 
@@ -22,7 +22,6 @@ angular.module('budgetmeApp')
     }();
 
     var regetReceipts = function(){
-      var deferred = $q.defer();
       $http.get('/api/expense/list_receipt/').success(function(data){
         $scope.receiptArray = data;
       });

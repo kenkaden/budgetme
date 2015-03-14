@@ -43,8 +43,11 @@
       		Amount: <span ng-hide="!receiptUpdateForm.receipt_amount.$error.number" class="formAlert">Must be a number.</span>
       		<input type="number" step="0.01" ng-model="receiptAmount" name="receipt_amount" class="form-control" required>  		
       		Envelope: 
-			<select ng-model="receiptEnvelope" name="receipt_envelope" class="form-control" ng-options="item for item in envelopeArray">
+<!-- 			<select ng-model="receiptEnvelope" name="receipt_envelope" class="form-control" ng-options="item.name for item in envelopeArray" ng-init="receiptEnvelope">
 				<option></option>
+			</select> -->
+			<select ng-model="receiptEnvelope" name="receipt_envelope" class="form-control" ng-init="receiptEnvelope">
+				<option ng-repeat="item in envelopeArray">{{item.name}}</option>
 			</select>
 
       	</form>
