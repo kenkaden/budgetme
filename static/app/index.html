@@ -60,7 +60,7 @@
                         </div>
 
                         <div class="formEnvelope">
-                        <select ng-model="envelopeOption" name="envelope_option" class="form-control input-lg" ng-options="item for item in envelopeArray" required>
+                        <select ng-model="envelopeOption" name="envelope_option" class="form-control input-lg" ng-options="item.name for item in envelopeArray" required>
                             <option></option>
                         </select>
                         </div>

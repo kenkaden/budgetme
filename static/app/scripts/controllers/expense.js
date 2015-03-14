@@ -16,47 +16,58 @@ angular.module('budgetmeApp')
     $scope.receiptSaved = "Save";
 
     var getReceipts = function(){
-      var deferred = $q.defer();
       ReceiptFactory.success(function(data){
-        $scope.receiptArray = [];
-        for (var i=0; i < data.length; i++){
-          var detail = {
-            "id": data[i]['id'],
-            "name": data[i]['name'],
-            "amount": data[i]['amount'],
-            "date": data[i]['date'],
-            "user": data[i]['user'],
-            "envelope": data[i]['envelope']
-          };
-          $scope.receiptArray.push(detail);
-        }
-        deferred.resolve($scope.receiptArray);
+        $scope.receiptArray = data;
       });
-      return deferred.promise;
     }();
-
-    // getReceipts();
 
     var regetReceipts = function(){
       var deferred = $q.defer();
       $http.get('/api/expense/list_receipt/').success(function(data){
-        $scope.receiptArray = [];
-        for (var i=0; i < data.length; i++){
-          var detail = {
-            "id": data[i]['id'],
-            "name": data[i]['name'],
-            "amount": parseFloat(data[i]['amount']),
-            "date": data[i]['date'],
-            "user": data[i]['user'],
-            "envelope": data[i]['envelope']
-          };
-          $scope.receiptArray.push(detail);
-        }
-        deferred.resolve($scope.receiptArray);
+        $scope.receiptArray = data;
       });
-      return deferred.promise;
-      regetReceipts();
     };
+
+    // var getReceipts = function(){
+    //   var deferred = $q.defer();
+    //   ReceiptFactory.success(function(data){
+    //     $scope.receiptArray = [];
+    //     for (var i=0; i < data.length; i++){
+    //       var detail = {
+    //         "id": data[i]['id'],
+    //         "name": data[i]['name'],
+    //         "amount": data[i]['amount'],
+    //         "date": data[i]['date'],
+    //         "user": data[i]['user'],
+    //         "envelope": data[i]['envelope']
+    //       };
+    //       $scope.receiptArray.push(detail);
+    //     }
+    //     deferred.resolve($scope.receiptArray);
+    //   });
+    //   return deferred.promise;
+    // }();
+
+    // var regetReceipts = function(){
+    //   var deferred = $q.defer();
+    //   $http.get('/api/expense/list_receipt/').success(function(data){
+    //     $scope.receiptArray = [];
+    //     for (var i=0; i < data.length; i++){
+    //       var detail = {
+    //         "id": data[i]['id'],
+    //         "name": data[i]['name'],
+    //         "amount": parseFloat(data[i]['amount']),
+    //         "date": data[i]['date'],
+    //         "user": data[i]['user'],
+    //         "envelope": data[i]['envelope']
+    //       };
+    //       $scope.receiptArray.push(detail);
+    //     }
+    //     deferred.resolve($scope.receiptArray);
+    //   });
+    //   return deferred.promise;
+    //   regetReceipts();
+    // };
 
     $scope.editClick = function(){
       if ($scope.editStatus === false){

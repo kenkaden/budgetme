@@ -45,16 +45,10 @@ angular.module('budgetmeApp')
     $scope.submitStatus = 'Submit';
 
     $scope.$on('updateEnvelope', function(event, args){
-        var updateDeferred = $q.defer();
         $http.get('/api/expense/list_envelope/')
         .success(function(data){
-            $scope.envelopeArray = [];
-            for (var i=0; i < data.length; i++) {
-                $scope.envelopeArray.push(data[i].name);
-            }
-            updateDeferred.resolve($scope.envelopeArray);
-        });
-        return updateDeferred.promise;
+            $scope.envelopeArray = data;
+        })
     });
 
     
@@ -63,21 +57,15 @@ angular.module('budgetmeApp')
         $scope.loginId = data.id;
     });
 
-    var getEnvelopes = function(){
-    var deferred = $q.defer();  
+    var getEnvelopes = function(){  
     EnvelopeFactory.success(function(data){
-        $scope.envelopeArray = [];
-            for (var i=0; i < data.length; i++) {
-                $scope.envelopeArray.push(data[i].name);
-            }
-            deferred.resolve($scope.envelopeArray);
-        });
-            return deferred.promise;
-    };
-
-    getEnvelopes().then(function(){
+        $scope.envelopeArray = data;
+        }).then(function(){
         $scope.envelopeOption = $scope.envelopeArray[0];
     });
+    };
+
+    getEnvelopes();
 
     $scope.toggle = function() {
          var myEl = angular.element( document.querySelector( '#wrapper' ) );
@@ -89,7 +77,7 @@ angular.module('budgetmeApp')
             "name" : name,
             "amount" : amount,
             "user" : $scope.loginId,
-            "envelope": envelope
+            "envelope": envelope.name
         };
 
         function submitStatusTimeout(){
