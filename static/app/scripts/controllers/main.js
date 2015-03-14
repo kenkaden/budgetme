@@ -46,13 +46,12 @@ angular.module('budgetmeApp')
 
     $scope.$on('updateEnvelope', function(event, args){
         var updateDeferred = $q.defer();
-        $scope.message = args.message;
-        console.log($scope.message);
-        $http.get('/api/expense/list_envelope/').success(function(data){
-        $scope.envelopeArray = [];
+        $http.get('/api/expense/list_envelope/')
+        .success(function(data){
+            $scope.envelopeArray = [];
             for (var i=0; i < data.length; i++) {
                 $scope.envelopeArray.push(data[i].name);
-                }
+            }
             updateDeferred.resolve($scope.envelopeArray);
         });
         return updateDeferred.promise;
@@ -70,7 +69,7 @@ angular.module('budgetmeApp')
         $scope.envelopeArray = [];
             for (var i=0; i < data.length; i++) {
                 $scope.envelopeArray.push(data[i].name);
-                }
+            }
             deferred.resolve($scope.envelopeArray);
         });
             return deferred.promise;
@@ -81,9 +80,9 @@ angular.module('budgetmeApp')
     });
 
     $scope.toggle = function() {
-             var myEl = angular.element( document.querySelector( '#wrapper' ) );
-             myEl.toggleClass('toggled');     
-        };
+         var myEl = angular.element( document.querySelector( '#wrapper' ) );
+         myEl.toggleClass('toggled');     
+    };
 
     $scope.expenseSubmit = function(name, amount, envelope){
         var data = {

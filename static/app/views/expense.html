@@ -14,7 +14,7 @@
 				<tbody>
 					<tr ng-repeat="receipt in receiptArray">
 						<td>{{receipt['name']}}</td>
-						<td>${{receipt['amount']}}</td>
+						<td>{{receipt['amount'] | currency}}</td>
 						<td>{{receipt['date']}}</td>
 						<td>{{receipt['envelope']}}</td>
 						<td ng-show="editStatus">
@@ -22,7 +22,7 @@
 							  Update
 							</button>
 						</td>
-						<td ng-show="editStatus"> <button type="button" class="btn btn-primary" ng-click="receiptDelete(receipt.id)">Delete {{receipt.id}}</button></td>
+						<td ng-show="editStatus"> <button type="button" class="btn btn-primary" ng-click="receiptDelete(receipt['id'])">Delete</button></td>
 					</tr>
 				</tbody>
 			</table>

@@ -23,7 +23,7 @@ angular.module('budgetmeApp')
           var detail = {
             "id": data[i]['id'],
             "name": data[i]['name'],
-            "amount": parseFloat(parseFloat(data[i]['amount']).toFixed(2)),
+            "amount": data[i]['amount'],
             "date": data[i]['date'],
             "user": data[i]['user'],
             "envelope": data[i]['envelope']
@@ -33,9 +33,9 @@ angular.module('budgetmeApp')
         deferred.resolve($scope.receiptArray);
       });
       return deferred.promise;
-    };
+    }();
 
-    getReceipts();
+    // getReceipts();
 
     var regetReceipts = function(){
       var deferred = $q.defer();
@@ -45,7 +45,7 @@ angular.module('budgetmeApp')
           var detail = {
             "id": data[i]['id'],
             "name": data[i]['name'],
-            "amount": parseFloat(parseFloat(data[i]['amount']).toFixed(2)),
+            "amount": parseFloat(data[i]['amount']),
             "date": data[i]['date'],
             "user": data[i]['user'],
             "envelope": data[i]['envelope']
@@ -69,7 +69,7 @@ angular.module('budgetmeApp')
 
     $scope.updateClick = function(index){
       $scope.receiptName = $scope.receiptArray[index]['name'];
-      $scope.receiptAmount = $scope.receiptArray[index]['amount'];
+      $scope.receiptAmount = parseFloat($scope.receiptArray[index]['amount']);
       $scope.receiptEnvelope = $scope.receiptArray[index]['envelope'];
       $scope.receiptId = $scope.receiptArray[index]['id'];
     };
@@ -79,7 +79,7 @@ angular.module('budgetmeApp')
         "name": $scope.receiptName,
         "amount": $scope.receiptAmount,
         "envelope": $scope.receiptEnvelope
-      };
+    };
 
       $http.patch('/api/expense/update_receipt/' + $scope.receiptId, data)
       .success (function(){
@@ -95,12 +95,15 @@ angular.module('budgetmeApp')
     };
 
     $scope.receiptDelete = function(id){
-        console.log("delete clicked id: " + id);
-        $http.delete('/api/expense/delete_receipt/' + id)
-        .success(function(){
-          regetReceipts();
+      $http.delete('/api/expense/delete_receipt/' + id)
+      .success(function(){
+        regetReceipts();
       })
     };
+
+    $scope.$on('updateExpense', function(event, args){
+      regetReceipts();
+    });
 
 
   }); //end of scope
