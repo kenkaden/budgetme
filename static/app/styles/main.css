@@ -39,3 +39,30 @@
 .formAlert{
   color:red;
 }
+
+.table tbody>tr>td.vert-align{
+    vertical-align: middle;
+}
+
+.trashCan {
+  color: #7B1318;
+  margin-left: 30px;
+  cursor: hand;
+  cursor: pointer;
+}
+
+.pencilEdit {
+  color: #0047B2;
+  margin-left: 5px;
+  cursor: hand;
+  cursor: pointer;
+}
+
+.toggleMenu {
+  font-size: 20px;
+}
+
+.table #columnName tr>th .cursorSwitch:hover{
+  cursor: hand;
+  cursor: pointer;
+}

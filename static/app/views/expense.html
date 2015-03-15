@@ -1,28 +1,26 @@
 <div class="container-fluid">
-    <button class="btn btn-default pull-right" ng-click="editClick()">Edit</button>
     <div class="row">
 			<table class="table table-hover">
-				<caption>Expenses</caption>
+				<h3>Expenses</h3>
 				<thead>
 					<tr>
-						<th>Name</th>
-						<th>Amount</th>
-						<th>Date</th>
-						<th>Envelope</th>
+						<th style="cursor: pointer; cursor: hand;" ng-click="filterClick('name')">Name</th>
+						<th style="cursor: pointer; cursor: hand;" ng-click="filterClick('amount')">Amount</th>
+						<th style="cursor: pointer; cursor: hand;" ng-click="filterClick('date')">Date</th>
+						<th style="cursor: pointer; cursor: hand;" ng-click="filterClick('envelope')">Envelope</th>
+						<th>Edit / Delete</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="receipt in receiptArray">
-						<td>{{receipt['name']}}</td>
-						<td>{{receipt['amount'] | currency}}</td>
-						<td>{{receipt['date']}}</td>
-						<td>{{receipt['envelope']}}</td>
-						<td ng-show="editStatus">
-							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" ng-click="updateClick($index)">
-							  Update
-							</button>
+					<tr ng-repeat="receipt in receiptArray | orderBy:filterType">
+						<td class="vert-align">{{receipt['name']}}</td>
+						<td class="vert-align">{{receipt['amount'] | currency}}</td>
+						<td class="vert-align">{{receipt['date']}}</td>
+						<td class="vert-align">{{receipt['envelope']}}</td>
+						<td>
+							<span class="filterCursor glyphicon glyphicon-pencil pencilEdit" data-toggle="modal" data-target="#myModal" ng-click="updateClick(receipt)" aria-hidden="true"></span>
+							<span class="filterCursor glyphicon glyphicon-trash trashCan" ng-click="receiptDelete(receipt['id'])" aria-hidden="true"></span>
 						</td>
-						<td ng-show="editStatus"> <button type="button" class="btn btn-primary" ng-click="receiptDelete(receipt['id'])">Delete</button></td>
 					</tr>
 				</tbody>
 			</table>
@@ -38,15 +36,11 @@
       </div>
       <div class="modal-body">
       	<form name="receiptUpdateForm" class"form-horizontal" novalidate>
-      		Expense: 
       		<input ng-model="receiptName" name="receipt_name" class="form-control" ng-init="receiptName" required>
       		Amount: <span ng-hide="!receiptUpdateForm.receipt_amount.$error.number" class="formAlert">Must be a number.</span>
       		<input type="number" step="0.01" ng-model="receiptAmount" name="receipt_amount" class="form-control" required>  		
       		Envelope: 
-<!-- 			<select ng-model="receiptEnvelope" name="receipt_envelope" class="form-control" ng-options="item.name for item in envelopeArray" ng-init="receiptEnvelope">
-				<option></option>
-			</select> -->
-			<select ng-model="receiptEnvelope" name="receipt_envelope" class="form-control" ng-init="receiptEnvelope">
+			<select ng-model="receiptEnvelope" name="receipt_envelope" class="form-control">
 				<option ng-repeat="item in envelopeArray">{{item.name}}</option>
 			</select>
 

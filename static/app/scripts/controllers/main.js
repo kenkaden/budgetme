@@ -90,7 +90,7 @@ angular.module('budgetmeApp')
             $scope.submitStatus = 'Submitted';
             $scope.expenseAmount = '';
             $scope.expenseName = '';
-            $timeout(submitStatusTimeout, 3000);
+            $timeout(submitStatusTimeout, 2000);
         })
         .error(function(error){
             console.log('This is the post error' + error);

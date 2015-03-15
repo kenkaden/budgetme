@@ -14,6 +14,7 @@ angular.module('budgetmeApp')
   .controller('ExpenseCtrl', function ($scope, $http, $location, $timeout, ReceiptFactory) {
     $scope.editStatus = false;
     $scope.receiptSaved = "Save";
+    $scope.filterType = 'date';
 
     var getReceipts = function(){
       ReceiptFactory.success(function(data){
@@ -27,47 +28,6 @@ angular.module('budgetmeApp')
       });
     };
 
-    // var getReceipts = function(){
-    //   var deferred = $q.defer();
-    //   ReceiptFactory.success(function(data){
-    //     $scope.receiptArray = [];
-    //     for (var i=0; i < data.length; i++){
-    //       var detail = {
-    //         "id": data[i]['id'],
-    //         "name": data[i]['name'],
-    //         "amount": data[i]['amount'],
-    //         "date": data[i]['date'],
-    //         "user": data[i]['user'],
-    //         "envelope": data[i]['envelope']
-    //       };
-    //       $scope.receiptArray.push(detail);
-    //     }
-    //     deferred.resolve($scope.receiptArray);
-    //   });
-    //   return deferred.promise;
-    // }();
-
-    // var regetReceipts = function(){
-    //   var deferred = $q.defer();
-    //   $http.get('/api/expense/list_receipt/').success(function(data){
-    //     $scope.receiptArray = [];
-    //     for (var i=0; i < data.length; i++){
-    //       var detail = {
-    //         "id": data[i]['id'],
-    //         "name": data[i]['name'],
-    //         "amount": parseFloat(data[i]['amount']),
-    //         "date": data[i]['date'],
-    //         "user": data[i]['user'],
-    //         "envelope": data[i]['envelope']
-    //       };
-    //       $scope.receiptArray.push(detail);
-    //     }
-    //     deferred.resolve($scope.receiptArray);
-    //   });
-    //   return deferred.promise;
-    //   regetReceipts();
-    // };
-
     $scope.editClick = function(){
       if ($scope.editStatus === false){
       $scope.editStatus = true;
@@ -77,11 +37,11 @@ angular.module('budgetmeApp')
       }
     };
 
-    $scope.updateClick = function(index){
-      $scope.receiptName = $scope.receiptArray[index]['name'];
-      $scope.receiptAmount = parseFloat($scope.receiptArray[index]['amount']);
-      $scope.receiptEnvelope = $scope.receiptArray[index]['envelope'];
-      $scope.receiptId = $scope.receiptArray[index]['id'];
+    $scope.updateClick = function(receipt){
+      $scope.receiptName = receipt['name'];
+      $scope.receiptAmount = receipt['amount'];
+      $scope.receiptEnvelope = receipt['envelope'];
+      $scope.receiptId = receipt['id'];
     };
 
     $scope.receiptPatch = function(){
@@ -99,7 +59,7 @@ angular.module('budgetmeApp')
         $scope.receiptSaved = 'Save';
       };
 
-      $timeout(submitStatusTimeout, 3000);
+      $timeout(submitStatusTimeout, 1000);
       regetReceipts();
       })
     };
@@ -111,9 +71,17 @@ angular.module('budgetmeApp')
       })
     };
 
-    $scope.$on('updateExpense', function(event, args){
+    $scope.filterClick = function (type){
+      if ($scope.filterType === type && $scope.filterType !== "-" + type){
+        $scope.filterType = '-' + type;
+      }
+      else{
+        $scope.filterType = type;
+      } 
+    };
+
+    $scope.$on('updateExpense', function(){
       regetReceipts();
     });
-
 
   }); //end of scope
