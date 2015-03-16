@@ -27,10 +27,7 @@ angular.module('budgetmeApp')
         getUser: function() {
             var nameDeferred = $q.defer();
             $http.get('/api/baseinfo/update/').success(function(data){
-                var userDetail = {
-                    'username': data.user.username,
-                    'id': data.user.id
-                };
+                var userDetail = data;
                 nameDeferred.resolve(userDetail);
             });
             return nameDeferred.promise;
@@ -50,11 +47,10 @@ angular.module('budgetmeApp')
             $scope.envelopeArray = data;
         })
     });
-
     
     UsernameFactory.getUser().then(function(data){
-        $scope.loginName = data.username;
-        $scope.loginId = data.id;
+        $scope.loginName = data.user.username.charAt(0).toUpperCase() + data.user.username.substring(1);
+        $scope.loginId = data.user.id;
     });
 
     var getEnvelopes = function(){  

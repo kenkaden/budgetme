@@ -15,6 +15,7 @@ angular.module('budgetmeApp')
     $scope.editStatus = false;
     $scope.receiptSaved = "Save";
     $scope.filterType = 'date';
+    $scope.datePositive = true;
 
     var getReceipts = function(){
       ReceiptFactory.success(function(data){

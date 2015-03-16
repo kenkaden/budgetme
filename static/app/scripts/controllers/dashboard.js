@@ -11,7 +11,7 @@ angular.module('budgetmeApp')
   .factory('ReceiptFactory', function($http){ 
     return $http.get('/api/expense/list_receipt/');
     })
-  .controller('EnvelopeCtrl', function ($scope) {
+  .controller('DashboardCtrl', function ($scope) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',

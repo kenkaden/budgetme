@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 class Envelope(models.Model):
     user = models.ForeignKey(User)
     name = models.CharField(max_length=120)
+    percentage = models.IntegerField(max_length=3)
 
     def __unicode__(self):
         return u"id:{}, user: {}, envelope: {}".format(self.pk, self.user, self.name)

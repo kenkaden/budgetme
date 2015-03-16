@@ -62,7 +62,7 @@
   font-size: 20px;
 }
 
-.table #columnName tr>th .cursorSwitch:hover{
+#cursorSwitch:hover{
   cursor: hand;
   cursor: pointer;
 }
