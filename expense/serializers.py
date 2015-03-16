@@ -5,7 +5,6 @@ from expense.models import Envelope, Receipt
 class EnvelopeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Envelope
-        fields = ('id', 'name')
 
 
 class ReceiptSerializer(serializers.ModelSerializer):

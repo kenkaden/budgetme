@@ -7,10 +7,11 @@ from django.contrib.auth.models import User
 class Envelope(models.Model):
     user = models.ForeignKey(User)
     name = models.CharField(max_length=120)
+    amount = models.DecimalField(max_digits=15, decimal_places=2)
     percentage = models.IntegerField(max_length=3)
 
     def __unicode__(self):
-        return u"id:{}, user: {}, envelope: {}".format(self.pk, self.user, self.name)
+        return u"id:{}, user: {}, envelope: {}, percentage: {}".format(self.pk, self.user, self.name, self.percentage)
 
 
 class Receipt(models.Model):
