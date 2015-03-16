@@ -8,12 +8,18 @@
  * Controller of the budgetmeApp
  */
 angular.module('budgetmeApp')
-  .controller('AboutCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  .factory('EnvelopeFactory', function($http){ 
+    return $http.get('/api/expense/list_envelope/');
+    })
+  .controller('EnvelopeCtrl', function ($scope, EnvelopeFactory) {
+
+    $scope.getEnvelope = function (){
+      EnvelopeFactory.success(function(data){
+        console.log(data);
+        $scope.envelopeArray = data;
+      })
+    }();
+
     $scope.handleClick = function(msg){
     	$scope.$emit('updateEnvelope', { message: "msg from about"});
     	console.log("handleClick clicked");

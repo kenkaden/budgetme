@@ -2,7 +2,7 @@
 <html class="no-js">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Budget Me</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -13,7 +13,7 @@
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/simple-sidebar.css"
+    <link rel="stylesheet" href="styles/simple-sidebar.css">
     <!-- endbuild -->
   </head>
   <body ng-app="budgetmeApp">
@@ -22,45 +22,62 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div ng-controller="MainCtrl" id="wrapper" class="{{state}}">
+    <div ng-controller="MainCtrl" id="wrapper">
 
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
-                    <a href="#">
-                        Start Bootstrap
-                    </a>
+                    <a href="#">Welcome Back, <span ng-bind="loginName"></span></a> 
                 </li>
                 <li>
                     <a href="#/">Dashboard</a>
                 </li>
                 <li>
-                    <a href="#">Shortcuts</a>
+                    <a href="#/envelope">Envelope</a>
                 </li>
                 <li>
-                    <a href="#">Overview</a>
-                </li>
-                <li>
-                    <a href="#">Events</a>
+                    <a href="#/expense">Expenses</a>
                 </li>
                 <li>
                     <a href="#/about">About</a>
                 </li>
                 <li>
-                    <a href="#">Services</a>
+                    <a href="#">Contact</a>
                 </li>
                 <li>
-                    <a href="#">Contact</a>
+                    <a href="#/logout">Logout</a>
+                </li>
+                <li>
+                    <form name="expenseEntry" class="form-horizontal" novalidate>
+                        <div class="formExpense">
+                        <input ng-model="expenseName" name="expense_name" class="form-control input-lg" type="text" placeholder="Expense Name"  required>
+                        </div>
+
+                        <div class="formAmount">
+                        <input ng-model="expenseAmount" name="expense_amount" class="form-control input-lg" type="number" placeholder=0.00 min="1" step="0.01" required>
+                        <span ng-hide="!expenseEntry.expense_amount.$error.number" class="formAlert">Must be a number.</span>
+                        </div>
+
+                        <div class="formEnvelope">
+                        <select ng-model="envelopeOption" name="envelope_option" class="form-control input-lg" ng-options="item.name for item in envelopeArray" required>
+                            <option></option>
+                        </select>
+                        </div>
+                    </form>
+                    <button class="btn btn-primary btn-lg formButton" ng-disabled="expenseEntry.$invalid" type="button" ng-click="expenseSubmit(expenseName, expenseAmount, envelopeOption)" ng-bind="submitStatus"></button>
                 </li>
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
 
-    <div id="page-content-wrapper">
-    <div ng-view=""></div>
-    </div> <!-- page-content-wrapper end -->
-  </div> <!-- wrapper end tag -->
+    <!-- <a class="btn btn-default" ng-click="toggle()">Toggle Menu</a> -->
+    <span class="btn glyphicon glyphicon-menu-hamburger toggleMenu" ng-click="toggle()"></span>
+
+        <div id="page-content-wrapper">
+            <div ng-view=""></div>
+        </div> <!-- page-content-wrapper end -->
+    </div> <!-- wrapper end tag -->
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
@@ -96,6 +113,9 @@
         <script src="scripts/controllers/login.js"></script>
         <script src="scripts/controllers/logout.js"></script>
         <script src="scripts/controllers/register.js"></script>
+        <script src="scripts/controllers/dashboard.js"></script>
+        <script src="scripts/controllers/envelope.js"></script>
+        <script src="scripts/controllers/expense.js"></script>
         <!-- endbuild -->
 </body>
 </html>

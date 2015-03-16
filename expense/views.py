@@ -4,7 +4,6 @@ from expense.models import Envelope, Receipt
 from expense.serializers import EnvelopeSerializer, ReceiptSerializer
 from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
 
-
 # Create your views here.
 
 
@@ -115,14 +114,15 @@ class ReceiptCreateAPIView(CreateAPIView):
         Post a single record for Receipt.
 
         """
+
         serializer = ReceiptSerializer(data=request.data)
 
         if serializer.is_valid():
             serializer.save(user=request.user)
-            return Response({"msg": "Receipt Created"}, status=status.HTTP_200_OK)
+            return Response(serializer.data, status=status.HTTP_200_OK)
 
         else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ReceiptUpdateAPIView(UpdateAPIView):
@@ -145,7 +145,7 @@ class ReceiptUpdateAPIView(UpdateAPIView):
             return Response({"msg": "Receipt is updated"}, status=status.HTTP_204_NO_CONTENT)
 
         else:
-            return Response({"msg": "Receipt does not exist"}, status=status.HTTP_404_NOT_FOUND)
+            return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
 
 class ReceiptDestroyAPIView(DestroyAPIView):

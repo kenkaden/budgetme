@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('budgetmeApp')
-  .controller('LoginCtrl', function ($scope, $location, $rootScope, djangoAuth, Validate) {
+  .controller('LoginCtrl', function ($scope, $location, $window, djangoAuth, Validate) {
     $scope.model = {'username':'','password':''};
   	$scope.complete = false;
     $scope.login = function(formData){
@@ -11,9 +11,8 @@ angular.module('budgetmeApp')
         djangoAuth.login($scope.model.username, $scope.model.password)
         .then(function(data){
         	// success case
-          console.log('login: ' + data);
-        	$location.path("/");
-            $rootScope.logname = $scope.model.username;
+        	// $location.path("/");
+          $window.location.href = "/";
         },function(data){
         	// error case
         	$scope.errors = data;

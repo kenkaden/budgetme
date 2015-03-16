@@ -8,15 +8,88 @@
  * Controller of the budgetmeApp
  */
 angular.module('budgetmeApp')
-  .controller('MainCtrl', function ($scope) {
-    $scope.state = '';
-    $scope.toggle =  function(){
-    	if ($scope.state === ''){
-    		$scope.state = 'toggled';
-    		console.log('clicked');
-    	}
-    	else {
-    		$scope.state = '';
-		}
+  .service('ExpenseService', function($http){
+    this.post = function(receiptName, amount, envelope) {
+        var data = {
+            'name': receiptName,
+            'amount': amount,
+            'envelope': envelope
+        };
+
+        $http.post('/api/expense/create_receipt/', data);
     };
+  })
+  .factory('EnvelopeFactory', function($http){ 
+    return $http.get('/api/expense/list_envelope/');
+    })
+  .factory('UsernameFactory', function($http, $q){ 
+    return {
+        getUser: function() {
+            var nameDeferred = $q.defer();
+            $http.get('/api/baseinfo/update/').success(function(data){
+                var userDetail = data;
+                nameDeferred.resolve(userDetail);
+            });
+            return nameDeferred.promise;
+        }
+      };
+    })
+  .controller('MainCtrl', function ($scope, ExpenseService, EnvelopeFactory, UsernameFactory, $q, $http, $timeout) {
+    $scope.problem = ''; 
+    $scope.loginName ='';
+    $scope.loginId = '';
+    $scope.nameError = 'Expense Name';
+    $scope.submitStatus = 'Submit';
+
+    $scope.$on('updateEnvelope', function(event, args){
+        $http.get('/api/expense/list_envelope/')
+        .success(function(data){
+            $scope.envelopeArray = data;
+        })
+    });
+    
+    UsernameFactory.getUser().then(function(data){
+        $scope.loginName = data.user.username.charAt(0).toUpperCase() + data.user.username.substring(1);
+        $scope.loginId = data.user.id;
+    });
+
+    var getEnvelopes = function(){  
+    EnvelopeFactory.success(function(data){
+        $scope.envelopeArray = data;
+        }).then(function(){
+        $scope.envelopeOption = $scope.envelopeArray[0];
+    });
+    };
+
+    getEnvelopes();
+
+    $scope.toggle = function() {
+         var myEl = angular.element( document.querySelector( '#wrapper' ) );
+         myEl.toggleClass('toggled');     
+    };
+
+    $scope.expenseSubmit = function(name, amount, envelope){
+        var data = {
+            "name" : name,
+            "amount" : amount,
+            "user" : $scope.loginId,
+            "envelope": envelope.name
+        };
+
+        function submitStatusTimeout(){
+            $scope.submitStatus = 'Submit';
+        };
+
+        $http.post('/api/expense/create_receipt/', data)
+        .success(function(data){
+            $scope.$broadcast('updateExpense', { message: 'msg from expense'});
+            $scope.submitStatus = 'Submitted';
+            $scope.expenseAmount = '';
+            $scope.expenseName = '';
+            $timeout(submitStatusTimeout, 2000);
+        })
+        .error(function(error){
+            console.log('This is the post error' + error);
+        });
+      };
   });

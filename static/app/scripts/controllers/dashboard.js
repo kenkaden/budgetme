@@ -8,7 +8,10 @@
  * Controller of the budgetmeApp
  */
 angular.module('budgetmeApp')
-  .controller('AboutCtrl', function ($scope) {
+  .factory('ReceiptFactory', function($http){ 
+    return $http.get('/api/expense/list_receipt/');
+    })
+  .controller('DashboardCtrl', function ($scope) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',

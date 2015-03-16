@@ -1,83 +1,68 @@
-.browsehappy {
-  margin: 0.2em 0;
-  background: #ccc;
-  color: #000;
-  padding: 0.2em 0;
+.formExpense {
+  vertical-align: center;
+  display: block;
+  margin: 25px 25px 10px 25px;
+  width: 200px;
 }
 
-body {
-  padding: 0;
+.formAmount {
+  vertical-align: center;
+  display: block;
+  margin: 0px 25px 10px 25px;
+  width: 200px;
 }
 
-/* Everything but the jumbotron gets side spacing for mobile first views */
-.header,
-.marketing,
-.footer {
-  padding-left: 15px;
-  padding-right: 15px;
+.formEnvelope {
+  vertical-align: center;
+  display: block;
+  margin: 0px 25px 10px 25px;
+  width: 200px;
 }
 
-/* Custom page header */
-.header {
-  border-bottom: 1px solid #e5e5e5;
-  margin-bottom: 10px;
-}
-/* Make the masthead heading the same height as the navigation */
-.header h3 {
-  margin-top: 0;
-  margin-bottom: 0;
-  line-height: 40px;
-  padding-bottom: 19px;
+.formButton {
+  vertical-align: center;
+  display: block;
+  margin: 10px 25px 25px 25px;
+  width: 200px;
 }
 
-/* Custom page footer */
-.footer {
-  padding-top: 19px;
-  color: #777;
-  border-top: 1px solid #e5e5e5;
+.center-button {
+  vertical-align: center;
+  margin: 0;
+  width: 100px;
 }
 
-.container-narrow > hr {
-  margin: 30px 0;
+.formInfo{
+  color:white;
 }
 
-/* Main marketing message and sign up button */
-.jumbotron {
-  text-align: center;
-  border-bottom: 1px solid #e5e5e5;
-}
-.jumbotron .btn {
-  font-size: 21px;
-  padding: 14px 24px;
+.formAlert{
+  color:red;
 }
 
-/* Supporting marketing content */
-.marketing {
-  margin: 40px 0;
-}
-.marketing p + h4 {
-  margin-top: 28px;
+.table tbody>tr>td.vert-align{
+    vertical-align: middle;
 }
 
-/* Responsive: Portrait tablets and up */
-@media screen and (min-width: 768px) {
-  .container {
-    max-width: 730px;
-  }
+.trashCan {
+  color: #7B1318;
+  margin-left: 30px;
+  cursor: hand;
+  cursor: pointer;
+}
 
-  /* Remove the padding we set earlier */
-  .header,
-  .marketing,
-  .footer {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  /* Space out the masthead */
-  .header {
-    margin-bottom: 30px;
-  }
-  /* Remove the bottom border on the jumbotron for visual effect */
-  .jumbotron {
-    border-bottom: 0;
-  }
+.pencilEdit {
+  color: #0047B2;
+  margin-left: 5px;
+  cursor: hand;
+  cursor: pointer;
+}
+
+.toggleMenu {
+  font-size: 20px;
+}
+
+#cursorSwitch:hover{
+  cursor: hand;
+  cursor: pointer;
 }

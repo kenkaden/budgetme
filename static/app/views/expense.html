@@ -1,0 +1,61 @@
+<div class="container-fluid">
+    <div class="row">
+			<table class="table table-hover">
+				<h3>Expenses</h3>
+				<thead>
+					<tr>
+						<th id="cursorSwitch" ng-click="filterClick('name')">Name</th>
+						<th id="cursorSwitch" ng-click="filterClick('amount')">Amount</th>
+						<th id="cursorSwitch" ng-click="filterClick('date')">Date</th>
+						<th id="cursorSwitch" ng-click="filterClick('envelope')">Envelope</th>
+						<th>Edit / Delete</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="receipt in receiptArray | orderBy:filterType">
+						<td class="vert-align">{{receipt['name']}}</td>
+						<td class="vert-align">{{receipt['amount'] | currency}}</td>
+						<td class="vert-align">{{receipt['date']}}</td>
+						<td class="vert-align">{{receipt['envelope']}}</td>
+						<td>
+							<span class="filterCursor glyphicon glyphicon-pencil pencilEdit" data-toggle="modal" data-target="#myModal" ng-click="updateClick(receipt)" aria-hidden="true"></span>
+							<span class="filterCursor glyphicon glyphicon-trash trashCan" ng-click="receiptDelete(receipt['id'])" aria-hidden="true"></span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+        </div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Update Expense</h4>
+      </div>
+      <div class="modal-body">
+      	<form name="receiptUpdateForm" class"form-horizontal" novalidate>
+      		<input ng-model="receiptName" name="receipt_name" class="form-control" ng-init="receiptName" required>
+      		Amount: <span ng-hide="!receiptUpdateForm.receipt_amount.$error.number" class="formAlert">Must be a number.</span>
+      		<input type="number" step="0.01" ng-model="receiptAmount" name="receipt_amount" class="form-control" required>  		
+      		Envelope: 
+			<select ng-model="receiptEnvelope" name="receipt_envelope" class="form-control">
+				<option ng-repeat="item in envelopeArray">{{item.name}}</option>
+			</select>
+
+      	</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" ng-disabled="receiptUpdateForm.$invalid" ng-click="receiptPatch()">{{receiptSaved}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</div> <!-- container-fluid -->
+
+
+

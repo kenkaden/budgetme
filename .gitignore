@@ -4,5 +4,6 @@ dist
 .sass-cache
 bower_components
 local_settings.py
-local_settings.pyc
 db.sqlite3
+*.pyc
+.idea/
