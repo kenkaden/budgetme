@@ -12,7 +12,6 @@ angular.module('budgetmeApp')
     return $http.get('/api/expense/list_receipt/');
     })
   .controller('ExpenseCtrl', function ($scope, $http, $location, $timeout, ReceiptFactory) {
-    $scope.editStatus = false;
     $scope.receiptSaved = "Save";
     $scope.filterType = 'date';
     $scope.datePositive = true;
@@ -27,15 +26,6 @@ angular.module('budgetmeApp')
       $http.get('/api/expense/list_receipt/').success(function(data){
         $scope.receiptArray = data;
       });
-    };
-
-    $scope.editClick = function(){
-      if ($scope.editStatus === false){
-      $scope.editStatus = true;
-      }
-      else {
-        $scope.editStatus = false;
-      }
     };
 
     $scope.updateClick = function(receipt){

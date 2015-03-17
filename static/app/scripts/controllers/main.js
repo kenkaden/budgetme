@@ -46,6 +46,9 @@ angular.module('budgetmeApp')
         .success(function(data){
             $scope.envelopeArray = data;
         })
+        .then(function(){
+        $scope.envelopeOption = $scope.envelopeArray[0];
+        });
     });
     
     UsernameFactory.getUser().then(function(data){

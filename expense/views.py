@@ -43,7 +43,7 @@ class EnvelopeCreateAPIView(CreateAPIView):
             return Response({"msg": "Envelope Created"}, status=status.HTTP_200_OK)
 
         else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class EnvelopeUpdateAPIView(UpdateAPIView):

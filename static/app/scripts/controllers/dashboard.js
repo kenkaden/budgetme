@@ -12,11 +12,6 @@ angular.module('budgetmeApp')
     return $http.get('/api/expense/list_receipt/');
     })
   .controller('DashboardCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
     $scope.handleClick = function(msg){
     	$scope.$emit('updateEnvelope', { message: "msg from about"});
     	console.log("handleClick clicked");
