@@ -13,11 +13,11 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="envelope in envelopeArray | orderBy:filterType">
-						<td class="vert-align">{{envelope['name']}}</td>
-						<td class="vert-align">{{envelope['amount'] | currency}}</td>
-            <td class="vert-align">{{(envelope['amount']/500) * 100}}%</td>
-						<td class="vert-align">{{envelope['percentage']}}%</td>
+					<tr ng-repeat="(name,value) in envelopeArray | orderBy:filterType">
+						<td class="vert-align">{{name}}</td>
+						<td class="vert-align">{{value[0] | currency}}</td>
+            <td class="vert-align">{{value[0] - value[1]| currency}}</td>
+						<td class="vert-align">{{value[0]/flexmoney * 100}}%</td>
 						<td>
 							<span class="filterCursor glyphicon glyphicon-pencil pencilEdit" data-toggle="modal" data-target="#myModal" ng-click="updateClick(envelope)" aria-hidden="true"></span>
 							<span class="filterCursor glyphicon glyphicon-trash trashCan" ng-click="envelopeDelete(envelope['id'])" aria-hidden="true"></span>

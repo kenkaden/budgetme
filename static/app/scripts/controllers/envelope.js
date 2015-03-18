@@ -9,13 +9,20 @@
  */
 angular.module('budgetmeApp')
   .factory('EnvelopeFactory', function($http){ 
-    return $http.get('/api/expense/list_envelope/');
+    return $http.get('/api/expense/expense_total/');
     })
-  .controller('EnvelopeCtrl', function ($scope, $http, $timeout, EnvelopeFactory, UsernameFactory) {
+  .factory('BasicInfoFactory', function($http){ 
+    return $http.get('/api/baseinfo/update/');
+    })
+  .controller('EnvelopeCtrl', function ($scope, $http, $timeout, EnvelopeFactory, UsernameFactory, BasicInfoFactory) {
     $scope.envelopeSaved = "Save";
 
-        UsernameFactory.getUser().then(function(data){
+    UsernameFactory.getUser().then(function(data){
         $scope.loginId = data.id;
+    });
+
+    BasicInfoFactory.success(function(data){
+      $scope.flexmoney = data.flex_money;
     });
 
     $scope.getEnvelope = function (){
@@ -25,10 +32,12 @@ angular.module('budgetmeApp')
     }();
 
     var regetEnvelopes = function(){
-      $http.get('/api/expense/list_envelope/').success(function(data){
+      $http.get('api/expense/expense_total/').success(function(data){
         $scope.envelopeArray = data;
       });
     };
+
+    regetEnvelopes();
 
     $scope.updateClick = function(envelope){
       $scope.envelopeName = envelope['name'];

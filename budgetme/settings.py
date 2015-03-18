@@ -53,6 +53,7 @@ INSTALLED_APPS = (
     'baseinfo',
     'expense',
     'subcategory',
+    'django_extensions',
     'debug_toolbar'
 )
 

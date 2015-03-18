@@ -28,6 +28,8 @@ angular.module('budgetmeApp')
       });
     };
 
+    regetReceipts();
+
     $scope.updateClick = function(receipt){
       $scope.receiptName = receipt['name'];
       $scope.receiptAmount = receipt['amount'];

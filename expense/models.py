@@ -10,7 +10,7 @@ class Envelope(models.Model):
     amount = models.DecimalField(max_digits=15, decimal_places=2)
 
     def __unicode__(self):
-        return u"id:{}, user: {}, envelope: {}".format(self.pk, self.user, self.name)
+        return u"id:{}, user: {}, envelope: {}, amount: {}".format(self.pk, self.user, self.name, self.amount)
 
 
 class Receipt(models.Model):
@@ -21,5 +21,5 @@ class Receipt(models.Model):
     date = models.DateField(auto_now_add=True)
 
     def __unicode__(self):
-        return u"User: {}, Envelop ID: {}, Amount: ${}, Date: {}".\
-            format(self.user, self.envelope, self.amount, self.date)
+        return u"User: {}, Envelop ID: {}, Name: {}, Amount: {}, Date: {}".\
+            format(self.user, self.envelope, self.name, self.amount, self.date)
