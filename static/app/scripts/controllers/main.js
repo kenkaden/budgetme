@@ -26,7 +26,7 @@ angular.module('budgetmeApp')
     return {
         getUser: function() {
             var nameDeferred = $q.defer();
-            $http.get('/api/baseinfo/update/').success(function(data){
+            $http.get('/api/baseinfo/list/').success(function(data){
                 var userDetail = data;
                 nameDeferred.resolve(userDetail);
             });
@@ -52,8 +52,8 @@ angular.module('budgetmeApp')
     });
     
     UsernameFactory.getUser().then(function(data){
-        $scope.loginName = data.user.username.charAt(0).toUpperCase() + data.user.username.substring(1);
-        $scope.loginId = data.user.id;
+        $scope.loginName = data.username.charAt(0).toUpperCase() + data.username.substring(1);
+        $scope.loginId = data.id;
     });
 
     var getEnvelopes = function(){  

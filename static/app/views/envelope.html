@@ -1,11 +1,13 @@
 <div class="container-fluid">
     <div class="row">
+      <div class="col-lg-7">
 			<table class="table table-hover">
 				<h3>Envelopes</h3><span id="cursorSwitch" class="glyphicon glyphicon-plus pull-right" data-toggle="modal" data-target="#myPostModal"></span>
 				<thead>
 					<tr>
 						<th id="cursorSwitch" ng-click="filterClick('name')">Name</th>
 						<th id="cursorSwitch" ng-click="filterClick('amount')">Amount Assigned</th>
+            <th id="cursorSwitch" ng-click="filterClick('amount')">Amount Left</th>
 						<th id="cursorSwitch" ng-click="filterClick('percentage')">Percentage of Flex</th>
 						<th>Edit / Delete</th>
 					</tr>
@@ -14,6 +16,7 @@
 					<tr ng-repeat="envelope in envelopeArray | orderBy:filterType">
 						<td class="vert-align">{{envelope['name']}}</td>
 						<td class="vert-align">{{envelope['amount'] | currency}}</td>
+            <td class="vert-align">{{(envelope['amount']/500) * 100}}%</td>
 						<td class="vert-align">{{envelope['percentage']}}%</td>
 						<td>
 							<span class="filterCursor glyphicon glyphicon-pencil pencilEdit" data-toggle="modal" data-target="#myModal" ng-click="updateClick(envelope)" aria-hidden="true"></span>
@@ -22,8 +25,26 @@
 					</tr>
 				</tbody>
 			</table>
-        </div> <!-- row -->
-        <div class="row">
+    </div><!-- col-lg-7 -->
+          <div class="col-lg-5">
+            <nvd3-pie-chart
+                data="exampleData"
+                  id="noDataExample"
+                  width="500"
+                  height="350"
+                  showXAxis="true"
+                  showYAxis="true"
+                  x="xFunction()"
+                  y="yFunction()"  
+                  margin="{left:0, top:0, bottom:0, right:0}"
+                  showLabels="true"
+                  tooltips="true"
+                  pieLabelsOutside="false"
+                  
+                  noData="Data not available">
+                    <svg height="250"></svg>
+              </nvd3-pie-chart>
+            </div> <!-- col-lg-5 -->
         </div><!-- row -->
 
 <!-- Patch Modal -->
@@ -39,8 +60,6 @@
       		Envelope: <input ng-model="envelopeName" name="envelope_name" class="form-control" ng-init="envelopeName" required>
       		Amount: <span ng-hide="!envelopeUpdateForm.receipt_amount.$error.number" class="formAlert">Must be a number.</span>
       		<input type="number" step="0.01" ng-model="envelopeAmount" name="envelope_amount" class="form-control" required>  	
-      		Percentage: <span ng-hide="!envelopeUpdateForm.receipt_amount.$error.number" class="formAlert">Must be a number.</span>
-      		<input type="number" ng-model="envelopePercentage" name="envelope_percentage" class="form-control" required>  	
       	</form>
       </div>
       <div class="modal-footer">
@@ -57,15 +76,13 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myPostModalLabel">Update Envelope</h4>
+        <h4 class="modal-title" id="myPostModalLabel">Create Envelope</h4>
       </div>
       <div class="modal-body">
       	<form name="envelopeUpdateForm" class"form-horizontal" novalidate>
-      		Envelope: <input ng-model="envelopeName" name="envelope_name" class="form-control" ng-init="envelopeName" required>
+      		Envelope: <input ng-model="envelopeName" name="envelope_name" class="form-control" required>
       		Amount: <span ng-hide="!envelopeUpdateForm.receipt_amount.$error.number" class="formAlert">Must be a number.</span>
       		<input type="number" step="0.01" ng-model="envelopeAmount" name="envelope_amount" class="form-control" required>  	
-      		Percentage: <span ng-hide="!envelopeUpdateForm.receipt_amount.$error.number" class="formAlert">Must be a number.</span>
-      		<input type="number" ng-model="envelopePercentage" name="envelope_percentage" class="form-control" required>  	
       	</form>
       </div>
       <div class="modal-footer">

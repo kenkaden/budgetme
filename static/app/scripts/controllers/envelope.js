@@ -15,7 +15,7 @@ angular.module('budgetmeApp')
     $scope.envelopeSaved = "Save";
 
         UsernameFactory.getUser().then(function(data){
-        $scope.loginId = data.user.id;
+        $scope.loginId = data.id;
     });
 
     $scope.getEnvelope = function (){
@@ -41,7 +41,6 @@ angular.module('budgetmeApp')
       var data={
         "name": $scope.envelopeName,
         "amount": $scope.envelopeAmount,
-        "percentage": $scope.envelopePercentage,
     };
 
       $http.patch('/api/expense/update_envelope/' + $scope.envelopeId, data)
@@ -62,13 +61,15 @@ angular.module('budgetmeApp')
       var data={
         "name": $scope.envelopeName,
         "amount": $scope.envelopeAmount,
-        "percentage": $scope.envelopePercentage,
         "user": $scope.loginId
     };
 
       $http.post('/api/expense/create_envelope/', data)
       .success (function(){
       $scope.envelopeSaved = 'Created';
+      $scope.envelopeName = '';
+      $scope.envelopeAmount = '';
+
 
       function submitStatusTimeout(){
         $scope.envelopeSaved = 'Save';
@@ -97,11 +98,33 @@ angular.module('budgetmeApp')
       } 
     };
 
-    $scope.handleClick = function(msg){
-    	$scope.$emit('updateEnvelope', { message: "msg from about"});
-    	console.log("handleClick clicked");
-    };
-      $scope.$on('updateExpense', function(event, args){
-        console.log("received from expense" + args.message);
-      });
-  });
+    // D3 settings
+    $scope.exampleData = [
+         { key: "Flex Money", y: 230 },
+         { key: "Groceries", y: 100 },
+         { key: "Transportation", y: 100 },
+         { key: "Dining Out", y: 50 },
+         { key: "Movies", y: 50 },
+     ];
+
+    //for Pie Chart
+    $scope.xFunction = function(){
+      return function(d){
+        return d.key;
+      };
+    }
+
+    $scope.yFunction = function(){
+      return function(d){
+        return d.y;
+      };
+    }
+
+    var colorArray = ['#FF00CC', '#660000', '#CC0000', '#FF6666', '#FF3333', '#FF6666', '#FFE6E6'];
+    $scope.colorFunction = function() {
+      return function(d, i) {
+          return colorArray[i];
+        };
+    }
+
+  }); //end of controller
