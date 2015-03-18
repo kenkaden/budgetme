@@ -10,11 +10,8 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class BasicInfoSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
-
     class Meta:
         model = BasicInfo
-        fields = ('id', 'income', 'fixed_cost', 'investment', 'savings', 'flex_money', 'user')
 
 
 class PercentInfoSerializer(serializers.ModelSerializer):

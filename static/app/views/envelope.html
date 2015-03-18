@@ -1,57 +1,97 @@
 <div class="container-fluid">
     <div class="row">
+      <div class="col-lg-7">
 			<table class="table table-hover">
-				<h3>Expenses</h3>
+				<h3>Envelopes</h3><span id="cursorSwitch" class="glyphicon glyphicon-plus pull-right" data-toggle="modal" data-target="#myPostModal"></span>
 				<thead>
 					<tr>
 						<th id="cursorSwitch" ng-click="filterClick('name')">Name</th>
-						<th id="cursorSwitch" ng-click="filterClick('amount')">Amount</th>
-						<th id="cursorSwitch" ng-click="filterClick('percentage')">Percentage</th>
+						<th id="cursorSwitch" ng-click="filterClick('amount')">Amount Assigned</th>
+            <th id="cursorSwitch" ng-click="filterClick('amount')">Amount Left</th>
+						<th id="cursorSwitch" ng-click="filterClick('percentage')">Percentage of Flex</th>
 						<th>Edit / Delete</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="envelope in envelopeArray | orderBy:filterType">
-						<td class="vert-align">{{envelope['name']}}</td>
-						<td class="vert-align">{{envelope['amount'] | currency}}</td>
-						<td class="vert-align">{{envelope['percentage']}}</td>
+					<tr ng-repeat="(name,value) in envelopeArray | orderBy:filterType">
+						<td class="vert-align">{{name}}</td>
+						<td class="vert-align">{{value[0] | currency}}</td>
+            <td class="vert-align">{{value[0] - value[1]| currency}}</td>
+						<td class="vert-align">{{value[0]/flexmoney * 100}}%</td>
 						<td>
-							<span class="filterCursor glyphicon glyphicon-pencil pencilEdit" data-toggle="modal" data-target="#myModal" ng-click="updateClick(receipt)" aria-hidden="true"></span>
-							<span class="filterCursor glyphicon glyphicon-trash trashCan" ng-click="receiptDelete(receipt['id'])" aria-hidden="true"></span>
+							<span class="filterCursor glyphicon glyphicon-pencil pencilEdit" data-toggle="modal" data-target="#myModal" ng-click="updateClick(envelope)" aria-hidden="true"></span>
+							<span class="filterCursor glyphicon glyphicon-trash trashCan" ng-click="envelopeDelete(envelope['id'])" aria-hidden="true"></span>
 						</td>
 					</tr>
 				</tbody>
 			</table>
-        </div>
+    </div><!-- col-lg-7 -->
+          <div class="col-lg-5">
+            <nvd3-pie-chart
+                data="exampleData"
+                  id="noDataExample"
+                  width="500"
+                  height="350"
+                  showXAxis="true"
+                  showYAxis="true"
+                  x="xFunction()"
+                  y="yFunction()"  
+                  margin="{left:0, top:0, bottom:0, right:0}"
+                  showLabels="true"
+                  tooltips="true"
+                  pieLabelsOutside="false"
+                  
+                  noData="Data not available">
+                    <svg height="250"></svg>
+              </nvd3-pie-chart>
+            </div> <!-- col-lg-5 -->
+        </div><!-- row -->
 
-<!-- Modal -->
+<!-- Patch Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Update Expense</h4>
+        <h4 class="modal-title" id="myModalLabel">Update Envelope</h4>
       </div>
       <div class="modal-body">
-      	<form name="receiptUpdateForm" class"form-horizontal" novalidate>
-      		<input ng-model="receiptName" name="receipt_name" class="form-control" ng-init="receiptName" required>
-      		Amount: <span ng-hide="!receiptUpdateForm.receipt_amount.$error.number" class="formAlert">Must be a number.</span>
-      		<input type="number" step="0.01" ng-model="receiptAmount" name="receipt_amount" class="form-control" required>  		
-      		Envelope: 
-			<select ng-model="receiptEnvelope" name="receipt_envelope" class="form-control">
-				<option ng-repeat="item in envelopeArray">{{item.name}}</option>
-			</select>
-
+      	<form name="envelopeUpdateForm" class"form-horizontal" novalidate>
+      		Envelope: <input ng-model="envelopeName" name="envelope_name" class="form-control" ng-init="envelopeName" required>
+      		Amount: <span ng-hide="!envelopeUpdateForm.receipt_amount.$error.number" class="formAlert">Must be a number.</span>
+      		<input type="number" step="0.01" ng-model="envelopeAmount" name="envelope_amount" class="form-control" required>  	
       	</form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" ng-disabled="receiptUpdateForm.$invalid" ng-click="receiptPatch()">{{receiptSaved}}</button>
+        <button type="button" class="btn btn-primary" ng-disabled="envelopeUpdateForm.$invalid" ng-click="envelopePatch()">{{envelopeSaved}}</button>
       </div>
     </div>
   </div>
 </div>
 
+<!-- Post Modal -->
+<div class="modal fade" id="myPostModal" tabindex="-1" role="dialog" aria-labelledby="myPostModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myPostModalLabel">Create Envelope</h4>
+      </div>
+      <div class="modal-body">
+      	<form name="envelopeUpdateForm" class"form-horizontal" novalidate>
+      		Envelope: <input ng-model="envelopeName" name="envelope_name" class="form-control" required>
+      		Amount: <span ng-hide="!envelopeUpdateForm.receipt_amount.$error.number" class="formAlert">Must be a number.</span>
+      		<input type="number" step="0.01" ng-model="envelopeAmount" name="envelope_amount" class="form-control" required>  	
+      	</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" ng-disabled="envelopeUpdateForm.$invalid" ng-click="createEnvelope()">{{envelopeSaved}}</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 </div> <!-- container-fluid -->
 

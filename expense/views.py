@@ -43,7 +43,7 @@ class EnvelopeCreateAPIView(CreateAPIView):
             return Response({"msg": "Envelope Created"}, status=status.HTTP_200_OK)
 
         else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class EnvelopeUpdateAPIView(UpdateAPIView):
@@ -100,6 +100,28 @@ class ReceiptListAPIView(ListAPIView):
         """
         user = self.request.user
         return Receipt.objects.filter(user=user)
+
+class ExpenseListAPIView(ListAPIView):
+    """
+    List all receipts for current user.
+
+    """
+    serializer_class = ReceiptSerializer
+
+    def get(self, request, *args, **kwargs):
+        """
+        Retrieves all expenses by categories for current logged in user.
+
+        """
+        data = {}
+
+        for e in Envelope.objects.filter(user=request.user.id):
+            data[e.name] = [e.amount, 0]
+
+        for r in Receipt.objects.filter(user=request.user.id):
+            data[r.envelope.name][1] += r.amount
+
+        return Response(data, status=status.HTTP_200_OK)
 
 
 class ReceiptCreateAPIView(CreateAPIView):

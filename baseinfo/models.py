@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class BasicInfo(models.Model):
-    user = models.OneToOneField(User)
+    user = models.ForeignKey(User, unique=True)
     income = models.DecimalField(max_digits=15, decimal_places=2)
     fixed_cost = models.DecimalField(max_digits=15, decimal_places=2)
     investment = models.DecimalField(max_digits=15, decimal_places=2)
@@ -13,11 +13,11 @@ class BasicInfo(models.Model):
 
     def __unicode__(self):
         return u"User: {}, Income {}, Fixed Cost: {}, Investment: {}, Savings: {}, Flex Money: {}".\
-            format(self.user_basic, self.income, self.fixed_cost, self.investment, self.savings, self.flex_money)
+            format(self.user, self.income, self.fixed_cost, self.investment, self.savings, self.flex_money)
 
 
 class PercentInfo(models.Model):
-    user = models.OneToOneField(User)
+    user = models.ForeignKey(User, unique=True)
     fixed_percent = models.IntegerField(max_length=2)
     invest_percent = models.IntegerField(max_length=2)
     saving_percent = models.IntegerField(max_length=2)
@@ -25,4 +25,4 @@ class PercentInfo(models.Model):
 
     def __unicode__(self):
         return u"User: {}, Fixed: {}%, Invest: {}%, Savings: {}%, Flex: {}%".\
-            format(self.user_percent, self.fixed_percent, self.invest_percent, self.saving_percent, self.flex_percent)
+            format(self.user, self.fixed_percent, self.invest_percent, self.saving_percent, self.flex_percent)
