@@ -16,6 +16,7 @@ angular.module('budgetmeApp')
     })
   .controller('EnvelopeCtrl', function ($scope, $http, $q, $timeout, EnvelopeFactory, UsernameFactory, BasicInfoFactory) {
     $scope.envelopeSaved = "Save";
+    $scope.envelopeDeleted = "Delete";
     $scope.pieArray = [];
 
     UsernameFactory.getUser().then(function(data){
@@ -67,6 +68,12 @@ angular.module('budgetmeApp')
       $scope.envelopeId = envelope['id'];
     };
 
+    $scope.deleteClick = function(envelope){
+      $scope.envelopeNameDelete = envelope['name'];
+      $scope.envelopeAmountDelete = envelope['amount'];
+      $scope.envelopeDeleteId = envelope['id'];
+    };
+
     $scope.envelopePatch = function(){
       var data={
         "name": $scope.envelopeName,
@@ -113,6 +120,7 @@ angular.module('budgetmeApp')
     $scope.envelopeDelete = function(id){
       $http.delete('/api/expense/delete_envelope/' + id)
       .success(function(){
+        $scope.envelopeDeleted = '';
         regetEnvelopes();
         graph();
         $scope.$emit('updateEnvelope', { message: 'msg from expense'});
