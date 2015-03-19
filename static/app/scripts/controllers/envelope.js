@@ -57,7 +57,6 @@ angular.module('budgetmeApp')
       for (var i=0; i < data.length; i++){
         $scope.flexAllocate -= data[i]['amount'];
         deferred.resolve($scope.flexAllocate);
-        console.log($scope.flexAllocate);
       }
       return deferred.promise;
     }
@@ -91,17 +90,14 @@ angular.module('budgetmeApp')
 
     $scope.createEnvelope = function(){
       var data={
-        "name": $scope.envelopeName,
-        "amount": $scope.envelopeAmount,
+        "name": $scope.envelopeNameNew,
+        "amount": $scope.envelopeAmountNew,
         "user": $scope.loginId
     };
 
       $http.post('/api/expense/create_envelope/', data)
       .success (function(){
       $scope.envelopeSaved = 'Created';
-      $scope.envelopeName = '';
-      $scope.envelopeAmount = '';
-
 
       function submitStatusTimeout(){
         $scope.envelopeSaved = 'Save';
@@ -133,14 +129,6 @@ angular.module('budgetmeApp')
     };
 
     // D3 settings
-    // $scope.exampleData = [
-    //      { key: "Flex Money", y: 230.12 },
-    //      { key: "Groceries", y: 100.56 },
-    //      { key: "Transportation", y: 100.25 },
-    //      { key: "Dining Out", y: 50.26 },
-    //      { key: "Movies", y: 50.67 },
-    //  ];
-
     //for Pie Chart
 
     var pieData = function(data){

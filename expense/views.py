@@ -111,7 +111,7 @@ class ExpenseListAPIView(ListAPIView):
 
     def get(self, request, *args, **kwargs):
         """
-        Retrieves all expenses and envelope amount by categories for current logged in user.
+        Retrieves all expenses and envelope amount for table by categories for current logged in user.
 
         """
         data_d = {}
@@ -219,7 +219,7 @@ class GraphListAPIView(ListAPIView):
 
     def get(self, request, *args, **kwargs):
         """
-        Retrieves all expenses by categories for current logged in user.
+        Retrieves all expenses for graphing by categories for current logged in user.
 
         """
         data_d = {}
@@ -230,9 +230,14 @@ class GraphListAPIView(ListAPIView):
             if (r.envelope.name not in data_d):
                 data_dict = {
                     "key": r.envelope.name,
-                    "y": r.envelope.amount - r.amount,
+                    "y": 0
                 }
                 data_d[r.envelope.name] = data_dict
+                data_dict['y'] += r.amount
+
+            else:
+                data_d[r.envelope.name]['y'] += r.amount
+
             total_spent += r.amount
 
         for e in Envelope.objects.filter(user=request.user.id):

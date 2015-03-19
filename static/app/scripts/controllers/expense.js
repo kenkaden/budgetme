@@ -53,6 +53,7 @@ angular.module('budgetmeApp')
       };
 
       $timeout(submitStatusTimeout, 1000);
+      $scope.$broadcast('updateExpense', { message: 'msg from expense'});
       regetReceipts();
       })
     };
@@ -60,6 +61,7 @@ angular.module('budgetmeApp')
     $scope.receiptDelete = function(id){
       $http.delete('/api/expense/delete_receipt/' + id)
       .success(function(){
+        $scope.$broadcast('updateExpense', { message: 'msg from expense'});
         regetReceipts();
       })
     };
