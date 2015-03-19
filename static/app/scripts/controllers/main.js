@@ -8,17 +8,6 @@
  * Controller of the budgetmeApp
  */
 angular.module('budgetmeApp')
-  .service('ExpenseService', function($http){
-    this.post = function(receiptName, amount, envelope) {
-        var data = {
-            'name': receiptName,
-            'amount': amount,
-            'envelope': envelope
-        };
-
-        $http.post('/api/expense/create_receipt/', data);
-    };
-  })
   .factory('EnvelopeFactory', function($http){ 
     return $http.get('/api/expense/list_envelope/');
     })
@@ -34,7 +23,7 @@ angular.module('budgetmeApp')
         }
       };
     })
-  .controller('MainCtrl', function ($scope, ExpenseService, EnvelopeFactory, UsernameFactory, $q, $http, $timeout) {
+  .controller('MainCtrl', function ($scope, EnvelopeFactory, UsernameFactory, $q, $http, $timeout) {
     $scope.problem = ''; 
     $scope.loginName ='';
     $scope.loginId = '';
@@ -57,7 +46,7 @@ angular.module('budgetmeApp')
     });
 
     var getEnvelopes = function(){  
-    EnvelopeFactory.success(function(data){
+    $http.get('/api/expense/list_envelope/').success(function(data){
         $scope.envelopeArray = data;
         }).then(function(){
         $scope.envelopeOption = $scope.envelopeArray[0];

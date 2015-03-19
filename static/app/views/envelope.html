@@ -13,23 +13,34 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="(name,value) in envelopeArray | orderBy:filterType">
-						<td class="vert-align">{{name}}</td>
-						<td class="vert-align">{{value[0] | currency}}</td>
-            <td class="vert-align">{{value[0] - value[1]| currency}}</td>
-						<td class="vert-align">{{value[0]/flexmoney * 100}}%</td>
+					<tr ng-repeat="envelope in envelopeArray | orderBy:filterType">
+						<td class="vert-align">{{envelope['name']}}</td>
+						<td class="vert-align">{{envelope['amount'] | currency}}</td>
+            <td class="vert-align">{{envelope['amount'] - envelope['spent'] | currency }}</td>
+						<td class="vert-align">{{envelope['amount']/flexmoney * 100}}%</td>
 						<td>
 							<span class="filterCursor glyphicon glyphicon-pencil pencilEdit" data-toggle="modal" data-target="#myModal" ng-click="updateClick(envelope)" aria-hidden="true"></span>
-							<span class="filterCursor glyphicon glyphicon-trash trashCan" ng-click="envelopeDelete(envelope['id'])" aria-hidden="true"></span>
+							<span class="filterCursor glyphicon glyphicon-trash trashCan" data-toggle="modal" data-target="#myDeleteModal" ng-click="deleteClick(envelope)" aria-hidden="true"></span>
 						</td>
 					</tr>
 				</tbody>
 			</table>
+      <h3>Flex money left: ${{flexleft}}</h3>
+      <h3 ng-show="flexAllocate">Flex money to allocate: ${{flexAllocate}}</h3>
+<!--       <ul>
+        <li ng-repeat="(key, value) in pieArray">{{key}} {{value}}</li>
+      </ul>
+        <ul>
+        <li ng-repeat="(key, value) in exampleData">{{key}} {{value}}</li>
+      </ul>
+            <ul>
+        <li>{{pieArray[0]['key']}}</li>
+      </ul> -->
     </div><!-- col-lg-7 -->
           <div class="col-lg-5">
             <nvd3-pie-chart
-                data="exampleData"
-                  id="noDataExample"
+                  data="graphData"
+                  id="DataExample"
                   width="500"
                   height="350"
                   showXAxis="true"
@@ -39,10 +50,12 @@
                   margin="{left:0, top:0, bottom:0, right:0}"
                   showLabels="true"
                   tooltips="true"
+                  labelType="key"
+                  labelType="percent"
+                  labelType="value"
                   pieLabelsOutside="false"
-                  
                   noData="Data not available">
-                    <svg height="250"></svg>
+                    <svg height="500"></svg>
               </nvd3-pie-chart>
             </div> <!-- col-lg-5 -->
         </div><!-- row -->
@@ -68,7 +81,7 @@
       </div>
     </div>
   </div>
-</div>
+</div>  <!-- end of Patch Modal -->
 
 <!-- Post Modal -->
 <div class="modal fade" id="myPostModal" tabindex="-1" role="dialog" aria-labelledby="myPostModalLabel" aria-hidden="true">
@@ -79,19 +92,43 @@
         <h4 class="modal-title" id="myPostModalLabel">Create Envelope</h4>
       </div>
       <div class="modal-body">
-      	<form name="envelopeUpdateForm" class"form-horizontal" novalidate>
-      		Envelope: <input ng-model="envelopeName" name="envelope_name" class="form-control" required>
-      		Amount: <span ng-hide="!envelopeUpdateForm.receipt_amount.$error.number" class="formAlert">Must be a number.</span>
-      		<input type="number" step="0.01" ng-model="envelopeAmount" name="envelope_amount" class="form-control" required>  	
+      	<form name="envelopeCreateForm" class"form-horizontal" novalidate>
+      		Envelope: <input ng-model="envelopeNameNew" name="envelope_name" class="form-control" required>
+      		Amount: <span ng-hide="!envelopeCreateForm.receipt_amount.$error.number" class="formAlert">Must be a number.</span>
+      		<input type="number" step="0.01" ng-model="envelopeAmountNew" name="envelope_amount" class="form-control" required>  	
       	</form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" ng-disabled="envelopeUpdateForm.$invalid" ng-click="createEnvelope()">{{envelopeSaved}}</button>
+        <button type="button" class="btn btn-primary" ng-disabled="envelopeCreateForm.$invalid" ng-click="createEnvelope()">{{envelopeSaved}}</button>
       </div>
     </div>
   </div>
-</div>
+</div>  <!-- end of Post Modal -->
+
+<!-- Delete Modal -->
+<div class="modal fade" id="myDeleteModal" tabindex="-1" role="dialog" aria-labelledby="myDeleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myDeleteModalLabel">Delete Confirmation</h4>
+      </div>
+      <div class="modal-body">
+        <h4 class="formAlert">Deleting this envelope will also delete all related expenses.</h4>
+        <form name="envelopeDeleteForm" class"form-horizontal" novalidate>
+          Envelope: <input ng-model="envelopeNameDelete" name="envelope_name" ng-disabled="envelopeNameDelete" class="form-control" required>
+          Amount:   <input type="number" step="0.01" ng-model="envelopeAmountDelete" name="envelope_amount" ng-disabled="envelopeAmountDelete" class="form-control" required>   
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-show="envelopeDeleted">Cancel</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-show="!envelopeDeleted">Done</button>
+        <button type="button" class="btn btn-danger" ng-click="envelopeDelete(envelopeDeleteId)" ng-show="envelopeDeleted">{{envelopeDeleted}}</button>
+      </div>
+    </div>
+  </div>
+</div> <!-- end of Delete Modal -->
 
 </div> <!-- container-fluid -->
 

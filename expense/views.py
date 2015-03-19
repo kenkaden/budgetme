@@ -1,8 +1,10 @@
 from rest_framework.response import Response
 from rest_framework import status
 from expense.models import Envelope, Receipt
+from baseinfo.models import BasicInfo
 from expense.serializers import EnvelopeSerializer, ReceiptSerializer
 from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
+import datetime
 
 # Create your views here.
 
@@ -98,8 +100,10 @@ class ReceiptListAPIView(ListAPIView):
         Retrieves all receipts for current logged in user.
 
         """
+        month = datetime.datetime.now().month
+        year = datetime.datetime.now().year
         user = self.request.user
-        return Receipt.objects.filter(user=user)
+        return Receipt.objects.filter(user=user, date__month=month, date__year=year)
 
 class ExpenseListAPIView(ListAPIView):
     """
@@ -110,18 +114,42 @@ class ExpenseListAPIView(ListAPIView):
 
     def get(self, request, *args, **kwargs):
         """
-        Retrieves all expenses by categories for current logged in user.
+        Retrieves all expenses and envelope amount for the month for table by categories for current logged in user.
 
         """
-        data = {}
+        month = datetime.datetime.now().month
+        year = datetime.datetime.now().year
+        data_d = {}
+        for e in Envelope.objects.filter(user=request.user.id):
+            data_dict = {
+                "id": e.id,
+                "name": e.name,
+                "amount": e.amount,
+                "spent": 0,
+            }
+            data_d[e.name] = data_dict
+
+        for r in Receipt.objects.filter(user=request.user.id, date__month=month, date__year=year):
+            if (r.envelope.name not in data_d):
+                data_d[r.envelope.name] = data_dict
+            data_d[r.envelope.name]["spent"] += r.amount
 
         for e in Envelope.objects.filter(user=request.user.id):
-            data[e.name] = [e.amount, 0]
+            if (e.name not in data_d):
+                data_d[e.name] = {"id": e.id, "key": e.name, "amount": e.amount, "spent": 0}
 
-        for r in Receipt.objects.filter(user=request.user.id):
-            data[r.envelope.name][1] += r.amount
+        data = data_d.values()
 
         return Response(data, status=status.HTTP_200_OK)
+
+        # data = {}
+        # for e in Envelope.objects.filter(user=request.user.id):
+        #     data[e.name] = [e.amount, 0]
+        #
+        # for r in Receipt.objects.filter(user=request.user.id):
+        #     data[r.envelope.name][1] += r.amount
+        #
+        # return Response(data, status=status.HTTP_200_OK)
 
 
 class ReceiptCreateAPIView(CreateAPIView):
@@ -186,3 +214,61 @@ class ReceiptDestroyAPIView(DestroyAPIView):
         snippet.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
+class GraphListAPIView(ListAPIView):
+    """
+    List all receipts for current user.
+
+    """
+    serializer_class = ReceiptSerializer
+
+    def get(self, request, *args, **kwargs):
+        """
+        Retrieves all expenses for the month for graphing by categories for current logged in user.
+
+        """
+        month = datetime.datetime.now().month
+        year = datetime.datetime.now().year
+        data_d = {}
+        total_spent = 0;
+        flex_money = (BasicInfo.objects.get(user=request.user.id)).flex_money
+
+        for r in Receipt.objects.filter(user=request.user.id, date__month=month, date__year=year):
+            if (r.envelope.name not in data_d):
+                data_dict = {
+                    "key": r.envelope.name,
+                    "y": 0
+                }
+                data_d[r.envelope.name] = data_dict
+                data_dict['y'] += r.amount
+
+            else:
+                data_d[r.envelope.name]['y'] += r.amount
+
+            total_spent += r.amount
+
+        for e in Envelope.objects.filter(user=request.user.id):
+            if (e.name not in data_d):
+                data_d[e.name] = {"key": e.name, "y": e.amount}
+
+        leftover = flex_money - total_spent
+        data_d["flex"] = {"key": "Flex Money", "y": leftover}
+        data = data_d.values()
+
+        return Response(data, status=status.HTTP_200_OK)
+
+class OldReceiptListAPIView(ListAPIView):
+    """
+    List all receipts for current user.
+
+    """
+    serializer_class = ReceiptSerializer
+
+    def get_queryset(self):
+        """
+        Retrieves all receipts for current logged in user.
+
+        """
+        user = self.request.user
+        return Receipt.objects.filter(user=user, date__gte=datetime.date(2013, 1, 1),
+                                      date__lte=datetime.date(3000, 12, 31))
