@@ -4,6 +4,7 @@ from expense.models import Envelope, Receipt
 from baseinfo.models import BasicInfo
 from expense.serializers import EnvelopeSerializer, ReceiptSerializer
 from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
+import datetime
 
 # Create your views here.
 
@@ -99,8 +100,10 @@ class ReceiptListAPIView(ListAPIView):
         Retrieves all receipts for current logged in user.
 
         """
+        month = datetime.datetime.now().month
+        year = datetime.datetime.now().year
         user = self.request.user
-        return Receipt.objects.filter(user=user)
+        return Receipt.objects.filter(user=user, date__month=month, date__year=year)
 
 class ExpenseListAPIView(ListAPIView):
     """
@@ -114,6 +117,8 @@ class ExpenseListAPIView(ListAPIView):
         Retrieves all expenses and envelope amount for table by categories for current logged in user.
 
         """
+        month = datetime.datetime.now().month
+        year = datetime.datetime.now().year
         data_d = {}
         for e in Envelope.objects.filter(user=request.user.id):
             data_dict = {
@@ -124,7 +129,7 @@ class ExpenseListAPIView(ListAPIView):
             }
             data_d[e.name] = data_dict
 
-        for r in Receipt.objects.filter(user=request.user.id):
+        for r in Receipt.objects.filter(user=request.user.id, date__month=month, date__year=year):
             if (r.envelope.name not in data_d):
                 data_d[r.envelope.name] = data_dict
             data_d[r.envelope.name]["spent"] += r.amount
@@ -222,11 +227,13 @@ class GraphListAPIView(ListAPIView):
         Retrieves all expenses for graphing by categories for current logged in user.
 
         """
+        month = datetime.datetime.now().month
+        year = datetime.datetime.now().year
         data_d = {}
         total_spent = 0;
         flex_money = (BasicInfo.objects.get(user=request.user.id)).flex_money
 
-        for r in Receipt.objects.filter(user=request.user.id):
+        for r in Receipt.objects.filter(user=request.user.id, date__month=month, date__year=year):
             if (r.envelope.name not in data_d):
                 data_dict = {
                     "key": r.envelope.name,
