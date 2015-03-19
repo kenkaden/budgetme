@@ -46,7 +46,7 @@ angular.module('budgetmeApp')
 
       $http.patch('/api/expense/update_receipt/' + $scope.receiptId, data)
       .success (function(){
-      $scope.receiptSaved = 'Updated';
+      $scope.receiptSaved = 'Updating';
 
       function submitStatusTimeout(){
         $scope.receiptSaved = 'Save';

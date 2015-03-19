@@ -82,7 +82,7 @@ angular.module('budgetmeApp')
 
       $http.patch('/api/expense/update_envelope/' + $scope.envelopeId, data)
       .success (function(){
-      $scope.envelopeSaved = 'Updated';
+      $scope.envelopeSaved = 'Updating';
 
       function submitStatusTimeout(){
         $scope.envelopeSaved = 'Save';
