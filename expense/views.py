@@ -114,7 +114,7 @@ class ExpenseListAPIView(ListAPIView):
 
     def get(self, request, *args, **kwargs):
         """
-        Retrieves all expenses and envelope amount for table by categories for current logged in user.
+        Retrieves all expenses and envelope amount for the month for table by categories for current logged in user.
 
         """
         month = datetime.datetime.now().month
@@ -224,7 +224,7 @@ class GraphListAPIView(ListAPIView):
 
     def get(self, request, *args, **kwargs):
         """
-        Retrieves all expenses for graphing by categories for current logged in user.
+        Retrieves all expenses for the month for graphing by categories for current logged in user.
 
         """
         month = datetime.datetime.now().month
@@ -257,3 +257,18 @@ class GraphListAPIView(ListAPIView):
 
         return Response(data, status=status.HTTP_200_OK)
 
+class OldReceiptListAPIView(ListAPIView):
+    """
+    List all receipts for current user.
+
+    """
+    serializer_class = ReceiptSerializer
+
+    def get_queryset(self):
+        """
+        Retrieves all receipts for current logged in user.
+
+        """
+        user = self.request.user
+        return Receipt.objects.filter(user=user, date__gte=datetime.date(2013, 1, 1),
+                                      date__lte=datetime.date(3000, 12, 31))
