@@ -113,15 +113,39 @@ class ExpenseListAPIView(ListAPIView):
         Retrieves all expenses by categories for current logged in user.
 
         """
-        data = {}
-
-        for e in Envelope.objects.filter(user=request.user.id):
-            data[e.name] = [e.amount, 0]
+        data_d = {}
+        # for e in Envelope.objects.filter(user=request.user.id):
+        #     data_dict = {
+        #         "id": e.id,
+        #         "name": e.name,
+        #         "amount": e.amount,
+        #         "spent": 0,
+        #     }
+        #     data_d[e.name] = data_dict
 
         for r in Receipt.objects.filter(user=request.user.id):
-            data[r.envelope.name][1] += r.amount
+            if (r.envelope.name not in data_d):
+                data_dict = {
+                    "id": r.envelope.id,
+                    "name": r.envelope.name,
+                    "amount": r.envelope.amount,
+                    "spent": 0
+                }
+                data_d[r.envelope.name] = data_dict
+            data_d[r.envelope.name]["spent"] += r.amount
+
+        data = data_d.values()
 
         return Response(data, status=status.HTTP_200_OK)
+
+        # data = {}
+        # for e in Envelope.objects.filter(user=request.user.id):
+        #     data[e.name] = [e.amount, 0]
+        #
+        # for r in Receipt.objects.filter(user=request.user.id):
+        #     data[r.envelope.name][1] += r.amount
+        #
+        # return Response(data, status=status.HTTP_200_OK)
 
 
 class ReceiptCreateAPIView(CreateAPIView):

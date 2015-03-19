@@ -17,6 +17,7 @@ angular
     'ngSanitize',
     'ngTouch',
     'nvd3ChartDirectives',
+    'customCurrency'
   ])
   .config(function ($routeProvider) {
     $routeProvider

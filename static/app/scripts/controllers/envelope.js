@@ -42,7 +42,6 @@ angular.module('budgetmeApp')
     $scope.updateClick = function(envelope){
       $scope.envelopeName = envelope['name'];
       $scope.envelopeAmount = envelope['amount'];
-      $scope.envelopePercentage = envelope['percentage'];
       $scope.envelopeId = envelope['id'];
     };
 
