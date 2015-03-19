@@ -46,7 +46,7 @@ angular.module('budgetmeApp')
     });
 
     var getEnvelopes = function(){  
-    EnvelopeFactory.success(function(data){
+    $http.get('/api/expense/list_envelope/').success(function(data){
         $scope.envelopeArray = data;
         }).then(function(){
         $scope.envelopeOption = $scope.envelopeArray[0];

@@ -1,6 +1,7 @@
 from rest_framework.response import Response
 from rest_framework import status
 from expense.models import Envelope, Receipt
+from baseinfo.models import BasicInfo
 from expense.serializers import EnvelopeSerializer, ReceiptSerializer
 from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
 
@@ -110,29 +111,27 @@ class ExpenseListAPIView(ListAPIView):
 
     def get(self, request, *args, **kwargs):
         """
-        Retrieves all expenses by categories for current logged in user.
+        Retrieves all expenses and envelope amount by categories for current logged in user.
 
         """
         data_d = {}
-        # for e in Envelope.objects.filter(user=request.user.id):
-        #     data_dict = {
-        #         "id": e.id,
-        #         "name": e.name,
-        #         "amount": e.amount,
-        #         "spent": 0,
-        #     }
-        #     data_d[e.name] = data_dict
+        for e in Envelope.objects.filter(user=request.user.id):
+            data_dict = {
+                "id": e.id,
+                "name": e.name,
+                "amount": e.amount,
+                "spent": 0,
+            }
+            data_d[e.name] = data_dict
 
         for r in Receipt.objects.filter(user=request.user.id):
             if (r.envelope.name not in data_d):
-                data_dict = {
-                    "id": r.envelope.id,
-                    "name": r.envelope.name,
-                    "amount": r.envelope.amount,
-                    "spent": 0
-                }
                 data_d[r.envelope.name] = data_dict
             data_d[r.envelope.name]["spent"] += r.amount
+
+        for e in Envelope.objects.filter(user=request.user.id):
+            if (e.name not in data_d):
+                data_d[e.name] = {"id": e.id, "key": e.name, "amount": e.amount, "spent": 0}
 
         data = data_d.values()
 
@@ -209,4 +208,40 @@ class ReceiptDestroyAPIView(DestroyAPIView):
         snippet = Receipt.objects.get(pk=id)
         snippet.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class GraphListAPIView(ListAPIView):
+    """
+    List all receipts for current user.
+
+    """
+    serializer_class = ReceiptSerializer
+
+    def get(self, request, *args, **kwargs):
+        """
+        Retrieves all expenses by categories for current logged in user.
+
+        """
+        data_d = {}
+        total_spent = 0;
+        flex_money = (BasicInfo.objects.get(user=request.user.id)).flex_money
+
+        for r in Receipt.objects.filter(user=request.user.id):
+            if (r.envelope.name not in data_d):
+                data_dict = {
+                    "key": r.envelope.name,
+                    "y": r.envelope.amount - r.amount,
+                }
+                data_d[r.envelope.name] = data_dict
+            total_spent += r.amount
+
+        for e in Envelope.objects.filter(user=request.user.id):
+            if (e.name not in data_d):
+                data_d[e.name] = {"key": e.name, "y": e.amount}
+
+        leftover = flex_money - total_spent
+        data_d["flex"] = {"key": "Flex Money", "y": leftover}
+        data = data_d.values()
+
+        return Response(data, status=status.HTTP_200_OK)
 

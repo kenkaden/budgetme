@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 from expense.views import EnvelopeCreateAPIView, EnvelopeListAPIView, EnvelopeUpdateAPIView, EnvelopeDestroyAPIView, \
-    ReceiptCreateAPIView, ReceiptListAPIView, ReceiptUpdateAPIView, ReceiptDestroyAPIView, ExpenseListAPIView
+    ReceiptCreateAPIView, ReceiptListAPIView, ReceiptUpdateAPIView, ReceiptDestroyAPIView, ExpenseListAPIView, GraphListAPIView
 
 urlpatterns = patterns('',
     url(r'^create_envelope/', EnvelopeCreateAPIView.as_view()),
@@ -11,7 +11,8 @@ urlpatterns = patterns('',
     url(r'^list_receipt/', ReceiptListAPIView.as_view()),
     url(r'^update_receipt/(?P<id>\w+)$', ReceiptUpdateAPIView.as_view()),
     url(r'^delete_receipt/(?P<id>\w+)$', ReceiptDestroyAPIView.as_view()),
-    url(r'^expense_total/', ExpenseListAPIView.as_view())
+    url(r'^expense_total/', ExpenseListAPIView.as_view()),
+    url(r'^graph/', GraphListAPIView.as_view())
 )
 
 __author__ = 'andy'

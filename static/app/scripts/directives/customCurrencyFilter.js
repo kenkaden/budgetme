@@ -12,10 +12,21 @@ angular.module('customCurrency', [])
      if (amount.charAt(0) === '-' ){
      	amount.toString();
      	temp = (amount.replace('-', '-$')).split(".");
-     	currency = temp[0] + "." + temp[1][0] + temp[1][1];
-     } else {
+     	if (temp[1][1] === undefined){
+     	currency = temp[0] + "." + temp[1][0] + '0';
+     	} else {
+     		currency = temp[0] + "." + temp[1][0] + temp[1][1];
+     	}
+     } else if (temp === undefined){
+     	currency = '0.00';
+     } 
+     else {
      	temp = amount.split(".")
-     	currency = '$' + temp[0] + "." + temp[1][0] + temp[1][1];
+	     	if (temp[1][1] === undefined){
+	     		currency = temp[0] + "." + temp[1][0] + '0'
+	     	} else {
+	     		currency = temp[0] + "." + temp[1][0] + temp[1][1];
+	     	}
      }       
      return currency;
   };

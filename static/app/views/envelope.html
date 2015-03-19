@@ -16,7 +16,7 @@
 					<tr ng-repeat="envelope in envelopeArray | orderBy:filterType">
 						<td class="vert-align">{{envelope['name']}}</td>
 						<td class="vert-align">{{envelope['amount'] | currency}}</td>
-            <td class="vert-align">{{envelope['amount'] - envelope['spent'] | customCurrency:value[0] }}</td>
+            <td class="vert-align">{{envelope['amount'] - envelope['spent'] | currency }}</td>
 						<td class="vert-align">{{envelope['amount']/flexmoney * 100}}%</td>
 						<td>
 							<span class="filterCursor glyphicon glyphicon-pencil pencilEdit" data-toggle="modal" data-target="#myModal" ng-click="updateClick(envelope)" aria-hidden="true"></span>
@@ -25,11 +25,22 @@
 					</tr>
 				</tbody>
 			</table>
+      <h1>Total money left: ${{flexleft}}</h1>
+      <h1 ng-show="flexAllocate">Money left to allocate: ${{flexAllocate}}</h1>
+<!--       <ul>
+        <li ng-repeat="(key, value) in pieArray">{{key}} {{value}}</li>
+      </ul>
+        <ul>
+        <li ng-repeat="(key, value) in exampleData">{{key}} {{value}}</li>
+      </ul>
+            <ul>
+        <li>{{pieArray[0]['key']}}</li>
+      </ul> -->
     </div><!-- col-lg-7 -->
           <div class="col-lg-5">
             <nvd3-pie-chart
-                data="exampleData"
-                  id="noDataExample"
+                  data="graphData"
+                  id="DataExample"
                   width="500"
                   height="350"
                   showXAxis="true"
@@ -39,10 +50,12 @@
                   margin="{left:0, top:0, bottom:0, right:0}"
                   showLabels="true"
                   tooltips="true"
+                  labelType="key"
+                  labelType="percent"
+                  labelType="value"
                   pieLabelsOutside="false"
-                  
                   noData="Data not available">
-                    <svg height="250"></svg>
+                    <svg height="500"></svg>
               </nvd3-pie-chart>
             </div> <!-- col-lg-5 -->
         </div><!-- row -->
