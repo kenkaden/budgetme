@@ -1,23 +1,112 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-7">
+            <table class="table table-hover">
+                <span id="cursorSwitch" ng-show="income" class="btn btn-primary" data-toggle="modal" data-target="#myPatchModal" ng-click="updateClick()">Update Income</span>
+                <span id="cursorSwitch" ng-show="!income" class="btn btn-danger" data-toggle="modal" data-target="#myPostModal">Add Income</span>
+                <h3>Budget Breakdown</h3>
+                <thead>
+                    <tr>
+                        <th id="cursorSwitch" ng-click="filterClick('name')">Name</th>
+                        <th id="cursorSwitch" ng-click="filterClick('amount')">Amount</th>
+                        <th id="cursorSwitch" ng-click="filterClick('percentage')">Percentage of Income</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-show="income">
+                        <td class="vert-align">Income</td>
+                        <td class="vert-align">{{income | currency}}</td>
+                        <td class="vert-align">100%</td>
+                    </tr>
+                    <tr ng-show="income">
+                        <td class="vert-align">Fixed Cost</td>
+                        <td class="vert-align">{{income * 0.6 | currency}}</td>
+                        <td class="vert-align">60%</td>
+                    </tr>
+                    <tr ng-show="income">
+                        <td class="vert-align">Investment</td>
+                        <td class="vert-align">{{income * 0.1 | currency}}</td>
+                        <td class="vert-align">10%</td>
+                    </tr>
+                    <tr ng-show="income">
+                        <td class="vert-align">Savings</td>
+                        <td class="vert-align">{{income * 0.1 | currency}}</td>
+                        <td class="vert-align">10%</td>
+                    </tr> 
+                    <tr ng-show="income">
+                        <td class="vert-align">Flex Money</td>
+                        <td class="vert-align">{{income * 0.2 | currency}}</td>
+                        <td class="vert-align">20%</td>
+                    </tr>                        
+                </tbody>
+            </table>
+    </div><!-- col-lg-7 -->
+          <div class="col-lg-5">
+            <nvd3-pie-chart
+                  data="graphData"
+                  id="DataExample"
+                  width="500"
+                  height="350"
+                  showXAxis="true"
+                  showYAxis="true"
+                  x="xFunction()"
+                  y="yFunction()"  
+                  margin="{left:0, top:0, bottom:0, right:0}"
+                  showLabels="true"
+                  tooltips="true"
+                  labelType="key"
+                  labelType="percent"
+                  labelType="value"
+                  pieLabelsOutside="false"
+                  noData="Data not available">
+                    <svg height="500"></svg>
+              </nvd3-pie-chart>
+            </div> <!-- col-lg-5 -->
+        </div><!-- row -->
 
-        <!-- Page Content -->
-<!--         <div id="page-content-wrapper"> -->
-            <div class="container-fluid">
-                <button class="btn btn-default" ng-click="$parent.toggle()">Edit</button>
-                <div class="row">
-                    <div class="col-xs-12 col-lg-8">
-                        <h1>Simple Sidebar</h1>
-                        <p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>
-                        <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>
-                        <a class="btn btn-default" ng-click="$parent.toggle()">Toggle Menu</a>
-                    </div>
-                    <div class="col-xs-6 col-lg-4">
-                        <h1>Simple Sidebar</h1>
-                        <p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>
-                        <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>
-                        <a class="btn btn-default" ng-click="$parent.toggle()">Toggle Menu</a>
-                    </div>
-                </div>  
-            </div>
-<!--         </div> -->
-        <!-- /#page-content-wrapper -->
+<!-- Patch Modal -->
+<div class="modal fade" id="myPatchModal" tabindex="-1" role="dialog" aria-labelledby="myPatchModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myPatchModalLabel">Update Envelope</h4>
+      </div>
+      <div class="modal-body">
+        <form name="incomeUpdateForm" class"form-horizontal" novalidate>
+            Income: <span ng-hide="!incomeUpdateForm.receipt_amount.$error.number" class="formAlert">Must be a number.</span>
+            <input type="number" step="0.01" ng-model="incomeAmount" name="income_amount" class="form-control" required>    
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" ng-disabled="incomeUpdateForm.$invalid" ng-click="updateSubmit()">{{updateStatus}}</button>
+      </div>
+    </div>
+  </div>
+</div>  <!-- end of Patch Modal -->
 
+<!-- Post Modal -->
+<div class="modal fade" id="myPostModal" tabindex="-1" role="dialog" aria-labelledby="myPostModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myPostModalLabel">Create Envelope</h4>
+      </div>
+      <div class="modal-body">
+        <form name="incomeCreateForm" class"form-horizontal" novalidate>
+            Income: <span ng-hide="!incomeCreateForm.receipt_amount.$error.number" class="formAlert">Must be a number.</span>
+            <input type="number" step="0.01" ng-model="incomeAmountNew" name="income_amount" class="form-control" required>     
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-show="incomeAdded">Close</button>
+        <button type="button" class="btn btn-success" data-dismiss="modal" ng-show="!incomeAdded">Done</button>
+        <button type="button" class="btn btn-primary" ng-disabled="incomeCreateForm.$invalid" ng-click="createIncome()" ng-show="incomeAdded">{{incomeAdded}}</button>
+      </div>
+    </div>
+  </div>
+</div>  <!-- end of Post Modal -->
+
+</div> <!-- container-fluid -->

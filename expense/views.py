@@ -2,7 +2,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from expense.models import Envelope, Receipt
 from baseinfo.models import BasicInfo
-from expense.serializers import EnvelopeSerializer, ReceiptSerializer
+from expense.serializers import EnvelopeSerializer, ReceiptSerializer, ReceiptDetailSerializer
 from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
 import datetime
 
@@ -93,7 +93,7 @@ class ReceiptListAPIView(ListAPIView):
     List all receipts for current user.
 
     """
-    serializer_class = ReceiptSerializer
+    serializer_class = ReceiptDetailSerializer
 
     def get_queryset(self):
         """

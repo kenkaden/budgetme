@@ -4,14 +4,14 @@
  * @ngdoc function
  * @name budgetmeApp.controller:AboutCtrl
  * @description
- * # ExpenseCtrl
+ * # RecordCtrl
  * Controller of the budgetmeApp
  */
 angular.module('budgetmeApp')  
   .factory('ReceiptFactory', function($http){ 
-    return $http.get('/api/expense/list_receipt/');
+    return $http.get('/api/expense/list_oldreceipt/');
     })
-  .controller('ExpenseCtrl', function ($scope, $http, $location, $timeout, ReceiptFactory) {
+  .controller('RecordCtrl', function ($scope, $http, $location, $timeout, ReceiptFactory) {
     $scope.receiptSaved = "Save";
     $scope.filterType = 'date';
     $scope.datePositive = true;
@@ -23,7 +23,7 @@ angular.module('budgetmeApp')
     }();
 
     var regetReceipts = function(){
-      $http.get('/api/expense/list_receipt/').success(function(data){
+      $http.get('/api/expense/list_oldreceipt/').success(function(data){
         $scope.receiptArray = data;
       });
     };
@@ -33,18 +33,17 @@ angular.module('budgetmeApp')
     $scope.updateClick = function(receipt){
       $scope.receiptName = receipt['name'];
       $scope.receiptAmount = receipt['amount'];
-      $scope.receiptEnvelope = receipt['envelope']['name'];
+      $scope.receiptEnvelope = receipt['envelope'];
       $scope.receiptId = receipt['id'];
     };
 
-    $scope.receiptPatch = function(envelope){
+    $scope.receiptPatch = function(){
       var data={
         "name": $scope.receiptName,
         "amount": $scope.receiptAmount,
-        "envelope": envelope.id
+        "envelope": $scope.receiptEnvelope
     };
-    console.log("receiptPatch below");
-    console.log(data);
+
       $http.patch('/api/expense/update_receipt/' + $scope.receiptId, data)
       .success (function(){
       $scope.receiptSaved = 'Updating';

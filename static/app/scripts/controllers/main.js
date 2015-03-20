@@ -65,7 +65,7 @@ angular.module('budgetmeApp')
             "name" : name,
             "amount" : amount,
             "user" : $scope.loginId,
-            "envelope": envelope.name
+            "envelope": envelope.id
         };
 
         function submitStatusTimeout(){

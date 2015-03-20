@@ -4,7 +4,7 @@
  * @ngdoc function
  * @name budgetmeApp.controller:AboutCtrl
  * @description
- * # AboutCtrl
+ * # EnvelopeCtrl
  * Controller of the budgetmeApp
  */
 angular.module('budgetmeApp')

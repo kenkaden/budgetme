@@ -47,7 +47,7 @@
                     <a href="#/expense">Expenses</a>
                 </li>
                 <li>
-                    <a href="#/about">About</a>
+                    <a href="#/record">Expense Records</a>
                 </li>
                 <li>
                     <a href="#">Contact</a>
@@ -67,7 +67,7 @@
                         </div>
 
                         <div class="formEnvelope">
-                        <select ng-model="envelopeOption" name="envelope_option" class="form-control input-lg" ng-options="item.name for item in envelopeArray" required>
+                        <select ng-model="envelopeOption" name="envelope_option" class="form-control input-lg" ng-options="item.name for item in envelopeArray track by item.id" required>
                             <option></option>
                         </select>
                         </div>
@@ -122,8 +122,8 @@
         <script src="scripts/controllers/register.js"></script>
         <script src="scripts/controllers/dashboard.js"></script>
         <script src="scripts/controllers/envelope.js"></script>
-
         <script src="scripts/controllers/expense.js"></script>
+        <script src="scripts/controllers/record.js"></script>
         <!-- endbuild -->
 </body>
 </html>

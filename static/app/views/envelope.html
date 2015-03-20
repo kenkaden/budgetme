@@ -17,7 +17,7 @@
 						<td class="vert-align">{{envelope['name']}}</td>
 						<td class="vert-align">{{envelope['amount'] | currency}}</td>
             <td class="vert-align">{{envelope['amount'] - envelope['spent'] | currency }}</td>
-						<td class="vert-align">{{envelope['amount']/flexmoney * 100}}%</td>
+						<td class="vert-align">{{envelope['amount']/flexmoney * 100 | number:2}}%</td>
 						<td>
 							<span class="filterCursor glyphicon glyphicon-pencil pencilEdit" data-toggle="modal" data-target="#myModal" ng-click="updateClick(envelope)" aria-hidden="true"></span>
 							<span class="filterCursor glyphicon glyphicon-trash trashCan" data-toggle="modal" data-target="#myDeleteModal" ng-click="deleteClick(envelope)" aria-hidden="true"></span>
@@ -26,16 +26,7 @@
 				</tbody>
 			</table>
       <h3>Flex money left: ${{flexleft}}</h3>
-      <h3 ng-show="flexAllocate">Flex money to allocate: ${{flexAllocate}}</h3>
-<!--       <ul>
-        <li ng-repeat="(key, value) in pieArray">{{key}} {{value}}</li>
-      </ul>
-        <ul>
-        <li ng-repeat="(key, value) in exampleData">{{key}} {{value}}</li>
-      </ul>
-            <ul>
-        <li>{{pieArray[0]['key']}}</li>
-      </ul> -->
+      <h3 ng-show="flexAllocate">Flex money to allocate: {{flexAllocate | currency}}</h3>
     </div><!-- col-lg-7 -->
           <div class="col-lg-5">
             <nvd3-pie-chart
@@ -123,7 +114,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-show="envelopeDeleted">Cancel</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-show="!envelopeDeleted">Done</button>
+        <button type="button" class="btn btn-success" data-dismiss="modal" ng-show="!envelopeDeleted">Done</button>
         <button type="button" class="btn btn-danger" ng-click="envelopeDelete(envelopeDeleteId)" ng-show="envelopeDeleted">{{envelopeDeleted}}</button>
       </div>
     </div>

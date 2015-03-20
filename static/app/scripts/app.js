@@ -31,7 +31,10 @@ angular
         templateUrl: 'views/expense.html',
         controller: 'ExpenseCtrl'
       })
-      .when('/about', {
+      .when('/record', {
+        templateUrl: 'views/record.html',
+        controller: 'RecordCtrl'
+      }).when('/about', {
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
       })
