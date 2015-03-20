@@ -27,6 +27,14 @@ angular.module('budgetmeApp')
         $scope.loginId = data.id;
     });
 
+    var graph = function(){
+      $http.get('/api/expense/graph/').success(function(data){
+        $scope.graphData = data;
+      });
+    };
+
+    graph();
+
     var updateProfile = function(){
       $http.get('/api/baseinfo/update/')
       .success(function(data){
@@ -79,5 +87,44 @@ angular.module('budgetmeApp')
       });
     };
 
+    // D3 settings
+    //for Pie Chart
+
+    var pieData = function(data){
+      $scope.flexleft = $scope.flexmoney;
+      var deferred = $q.defer();
+      for (var i=0; i < data.length; i++){
+        $scope.pieArray.push({"key": data[i]['key'], "y": data[i]['spent']})
+        $scope.flexleft -= data[i]['spent'];
+        deferred.resolve($scope.pieArray);
+
+      }
+      $scope.pieArray.push({"key": "Flex Money", "y": $scope.flexleft});
+      return deferred.promise;
+    };
+
+    $scope.xFunction = function(){
+      return function(d){
+        return d.key;
+      };
+    }
+
+    $scope.yFunction = function(){
+      return function(d){
+        return d.y;
+      };
+    }
+
+    var colorArray = ['#FF00CC', '#660000', '#CC0000', '#FF6666', '#FF3333', '#FF6666', '#FFE6E6'];
+    $scope.colorFunction = function() {
+      return function(d, i) {
+          return colorArray[i];
+        };
+    }
+
+    $scope.$on('updateExpense', function(){
+      regetEnvelopes();
+      graph();
+    });
 
   }); // End of controller

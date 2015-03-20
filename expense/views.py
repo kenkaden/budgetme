@@ -262,7 +262,7 @@ class OldReceiptListAPIView(ListAPIView):
     List all receipts for current user.
 
     """
-    serializer_class = ReceiptSerializer
+    serializer_class = ReceiptDetailSerializer
 
     def get_queryset(self):
         """

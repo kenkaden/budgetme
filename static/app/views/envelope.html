@@ -25,13 +25,13 @@
 					</tr>
 				</tbody>
 			</table>
-      <h3>Flex money left: ${{flexleft}}</h3>
+      <h3>Flex money left: {{flexleft | currency}}</h3>
       <h3 ng-show="flexAllocate">Flex money to allocate: {{flexAllocate | currency}}</h3>
     </div><!-- col-lg-7 -->
           <div class="col-lg-5">
             <nvd3-pie-chart
                   data="graphData"
-                  id="DataExample"
+                  id="envelopeGraph"
                   width="500"
                   height="350"
                   showXAxis="true"
