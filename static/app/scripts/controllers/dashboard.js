@@ -11,7 +11,10 @@ angular.module('budgetmeApp')
   .factory('UserProfileFactory', function($http){ 
     return $http.get('/api/baseinfo/update/');
     })
-  .controller('DashboardCtrl', function ($scope, $http, $timeout, UserProfileFactory, UsernameFactory){ 
+  .factory('QuoteFactory', function($http){
+    return $http.get('http://api.theysaidso.com/qod.json');
+  })
+  .controller('DashboardCtrl', function ($scope, $http, $timeout, UserProfileFactory, UsernameFactory, QuoteFactory){ 
     $scope.updateStatus = 'Save';
     $scope.incomeAdded = 'Add';
 
@@ -25,6 +28,12 @@ angular.module('budgetmeApp')
 
     UsernameFactory.getUser().then(function(data){
         $scope.loginId = data.id;
+    });
+
+    QuoteFactory.success(function(data){
+      $scope.quote=data.contents;
+      console.log(data);
+      console.log($scope.data);
     });
 
     var graph = function(){
