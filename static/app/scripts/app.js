@@ -16,27 +16,51 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'nvd3ChartDirectives',
-    'customCurrency'
+    'nvd3ChartDirectives'
   ])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/dashboard.html',
-        controller: 'DashboardCtrl'
+        controller: 'DashboardCtrl',
+        resolve: {
+          authenticated: ['djangoAuth', function(djangoAuth){
+          return djangoAuth.authenticationStatus();
+          }],
+        }
       }).when('/envelope', {
         templateUrl: 'views/envelope.html',
-        controller: 'EnvelopeCtrl'
+        controller: 'EnvelopeCtrl',
+        resolve: {
+          authenticated: ['djangoAuth', function(djangoAuth){
+          return djangoAuth.authenticationStatus();
+          }],
+        }
       }).when('/expense', {
         templateUrl: 'views/expense.html',
-        controller: 'ExpenseCtrl'
+        controller: 'ExpenseCtrl',
+        resolve: {
+          authenticated: ['djangoAuth', function(djangoAuth){
+          return djangoAuth.authenticationStatus();
+          }],
+        }
       })
       .when('/record', {
         templateUrl: 'views/record.html',
-        controller: 'RecordCtrl'
+        controller: 'RecordCtrl',
+        resolve: {
+          authenticated: ['djangoAuth', function(djangoAuth){
+          return djangoAuth.authenticationStatus();
+          }],
+        }
       }).when('/about', {
         templateUrl: 'views/about.html',
-        controller: 'AboutCtrl'
+        controller: 'AboutCtrl',
+        resolve: {
+          authenticated: ['djangoAuth', function(djangoAuth){
+          return djangoAuth.authenticationStatus();
+          }],
+        }
       })
       .when('/login', {
             templateUrl: 'views/login.html',
@@ -51,7 +75,7 @@ angular
             controller: 'RegisterCtrl'
       })
       .otherwise({
-        redirectTo: '/'
+        redirectTo: '/register'
       });
   })
   .config(function($httpProvider){

@@ -1,8 +1,7 @@
 'use strict';
 
 angular.module('budgetmeApp')
-  .controller('LogoutCtrl', function ($scope, $location, $timeout, $rootScope, $window, djangoAuth) {
-    $rootScope.logname='';
+  .controller('LogoutCtrl', function ($scope, $window, djangoAuth) {
     djangoAuth.logout();
-    $window.location.href = "/";
+    $window.location.href = "#/login";
    });

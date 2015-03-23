@@ -39,7 +39,7 @@
                     <a href="#/login" ng-if="loginName">Welcome Back, <span ng-bind="loginName"></span></a> 
                 </li>
                 <li>
-                    <a href="#/">Dashboard</a>
+                    <a href="#/dashboard">Dashboard</a>
                 </li>
                 <li>
                     <a href="#/envelope">Envelope</a>
@@ -113,7 +113,6 @@
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
-        <script src="scripts/directives/customCurrencyFilter.js"></script>
         <script src="scripts/services/djangoAuth.js"></script>
         <script src="scripts/services/validate.js"></script>
         <script src="scripts/controllers/main.js"></script>

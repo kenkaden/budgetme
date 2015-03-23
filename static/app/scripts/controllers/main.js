@@ -84,4 +84,8 @@ angular.module('budgetmeApp')
             console.log('This is the post error' + error);
         });
       };
-  });
+
+      $scope.$on("djangoAuth.logged_out", function(){
+        $scope.loginName ='';
+      });
+  }); // end of controller

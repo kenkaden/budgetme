@@ -92,9 +92,7 @@ angular.module('budgetmeApp')
 
     //YQL Two Cents Lifehacker API
     $http.get("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20feed%20where%20url%3D'http%3A%2F%2Ftwocents.lifehacker.com%2Frss'&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=").success(function(data){
-      $scope.lhRSS = data.query.results.item
-      console.log("lhRSS below"),
-      console.log(data.query.results.item);
+      $scope.lhRSS = data.query.results.item;
     })
     .error(function(err){
       console.log("error " + err);
