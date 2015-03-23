@@ -11,10 +11,10 @@ angular.module('budgetmeApp')
   .factory('UserProfileFactory', function($http){ 
     return $http.get('/api/baseinfo/update/');
     })
-  .factory('QuoteFactory', function($http){
-    return $http.get('http://api.theysaidso.com/qod.json');
-  })
-  .controller('DashboardCtrl', function ($scope, $http, $timeout, UserProfileFactory, UsernameFactory, QuoteFactory){ 
+  // .factory('QuoteFactory', function($http){
+  //   return $http.get('http://api.theysaidso.com/qod.json');
+  // })
+  .controller('DashboardCtrl', function ($scope, $http, $timeout, UserProfileFactory, UsernameFactory){ 
     $scope.updateStatus = 'Save';
     $scope.incomeAdded = 'Add';
 
@@ -23,17 +23,11 @@ angular.module('budgetmeApp')
       $scope.income = $scope.budgetArray['income'];
     })
     .error(function(err){
-      console.log("This is a first time user");
+      console.log("No income provided");
     });
 
     UsernameFactory.getUser().then(function(data){
         $scope.loginId = data.id;
-    });
-
-    QuoteFactory.success(function(data){
-      $scope.quote=data.contents;
-      console.log(data);
-      console.log($scope.data);
     });
 
     var graph = function(){
@@ -96,6 +90,15 @@ angular.module('budgetmeApp')
       });
     };
 
+    //ImportIO Twitter Stream API
+    $http.get('https://api.import.io/store/data/e201528e-d3b0-4430-b960-5a167359dc84/_query?input/webpage/url=https%3A%2F%2Ftwitter.com%2Fjillonmoney&_user=acf995a3-1a04-4859-8f4e-c3ddc1f6dc3f&_apikey=0Qo7kdELAlwo78F9gnUKDD5juZr6fOozVb17QdTYqcFllp2ee5Z7BVdU%2BlL22kbRZNc3P2aaOXjnaDVwMwiqkQ%3D%3D').success(function(data){
+      console.log("twitStream below"),
+      console.log(data.results);
+    })
+    .error(function(err){
+      console.log("error " + err);
+    })
+
     // D3 settings
     //for Pie Chart
 
@@ -130,6 +133,8 @@ angular.module('budgetmeApp')
           return colorArray[i];
         };
     }
+
+    //End of D3 settings
 
     $scope.$on('updateExpense', function(){
       regetEnvelopes();

@@ -12,7 +12,7 @@ angular.module('budgetmeApp')
         .then(function(data){
         	// success case
         	$scope.complete = true;
-            alert("Thank you for registering");
+          alert("Thank you for registering");
           $location.path("/login");
         },function(data){
         	// error case

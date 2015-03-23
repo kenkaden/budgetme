@@ -21,7 +21,7 @@
                 <input name="email" id="id_email" class="form-control" type="email" ng-model="model.email" placeholder="Email" required />
             </div>
             <div class="alert alert-danger" ng-repeat="error in errors.email">{{error}}</div>
-            <button ng-hide="authenticated" type="submit" class="btn btn-primary">Register</button>
+            <button  ng-disabled="registerForm.$invalid" ng-hide="authenticated" type="submit" class="btn btn-primary">Register</button>
         </form>
         <br>
         <p ng-if="authenticated">You are already logged in!  You don't need to register.</p>

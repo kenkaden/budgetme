@@ -5,6 +5,7 @@
     <title>Budget Me</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic' rel='stylesheet' type='text/css'>
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
@@ -35,7 +36,7 @@
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
-                    <a href="#/login">Welcome Back, <span ng-bind="loginName"></span></a> 
+                    <a href="#/login" ng-if="loginName">Welcome Back, <span ng-bind="loginName"></span></a> 
                 </li>
                 <li>
                     <a href="#/">Dashboard</a>
@@ -53,7 +54,7 @@
                     <a href="#">Contact</a>
                 </li>
                 <li>
-                    <a href="#/logout">Logout</a>
+                    <a href="#/logout" ng-if="loginName">Logout</a>
                 </li>
                 <li>
                     <form name="expenseEntry" class="form-horizontal" novalidate>
