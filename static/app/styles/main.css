@@ -70,3 +70,7 @@
   cursor: hand;
   cursor: pointer;
 }
+
+.articles{
+  font-weight: 400;
+}
