@@ -12,7 +12,7 @@ angular.module('budgetmeApp')
         .then(function(data){
         	// success case
         	// $location.path("/");
-          $window.location.href = "/";
+          $window.location.href = "#/dashboard";
         },function(data){
         	// error case
         	$scope.errors = data;

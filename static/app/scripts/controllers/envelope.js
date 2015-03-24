@@ -176,4 +176,9 @@ angular.module('budgetmeApp')
       graph();
     });
 
+    $scope.$on("djangoAuth.logged_out", function(){
+        $scope.flexAllocate ='';
+        $scope.flexleft = '';
+      });
+
   }); //end of controller

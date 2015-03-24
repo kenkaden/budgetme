@@ -20,47 +20,22 @@ angular
   ])
   .config(function ($routeProvider) {
     $routeProvider
-      .when('/', {
+      .when('/dashboard', {
         templateUrl: 'views/dashboard.html',
-        controller: 'DashboardCtrl',
-        resolve: {
-          authenticated: ['djangoAuth', function(djangoAuth){
-          return djangoAuth.authenticationStatus();
-          }],
-        }
+        controller: 'DashboardCtrl'
       }).when('/envelope', {
         templateUrl: 'views/envelope.html',
-        controller: 'EnvelopeCtrl',
-        resolve: {
-          authenticated: ['djangoAuth', function(djangoAuth){
-          return djangoAuth.authenticationStatus();
-          }],
-        }
+        controller: 'EnvelopeCtrl'
       }).when('/expense', {
         templateUrl: 'views/expense.html',
-        controller: 'ExpenseCtrl',
-        resolve: {
-          authenticated: ['djangoAuth', function(djangoAuth){
-          return djangoAuth.authenticationStatus();
-          }],
-        }
+        controller: 'ExpenseCtrl'
       })
       .when('/record', {
         templateUrl: 'views/record.html',
-        controller: 'RecordCtrl',
-        resolve: {
-          authenticated: ['djangoAuth', function(djangoAuth){
-          return djangoAuth.authenticationStatus();
-          }],
-        }
+        controller: 'RecordCtrl'
       }).when('/about', {
         templateUrl: 'views/about.html',
-        controller: 'AboutCtrl',
-        resolve: {
-          authenticated: ['djangoAuth', function(djangoAuth){
-          return djangoAuth.authenticationStatus();
-          }],
-        }
+        controller: 'AboutCtrl'
       })
       .when('/login', {
             templateUrl: 'views/login.html',
@@ -75,7 +50,7 @@ angular
             controller: 'RegisterCtrl'
       })
       .otherwise({
-        redirectTo: '/register'
+        redirectTo: '/'
       });
   })
   .config(function($httpProvider){

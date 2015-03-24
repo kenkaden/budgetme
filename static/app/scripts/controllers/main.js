@@ -85,6 +85,13 @@ angular.module('budgetmeApp')
         });
       };
 
+      $scope.$on("djangoAuth.logged_in", function(){
+        UsernameFactory.getUser().then(function(data){
+            $scope.loginName = data.username.charAt(0).toUpperCase() + data.username.substring(1);
+            $scope.loginId = data.id;
+        });
+      });
+
       $scope.$on("djangoAuth.logged_out", function(){
         $scope.loginName ='';
       });
