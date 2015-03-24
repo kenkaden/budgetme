@@ -16,11 +16,11 @@ angular.module('budgetmeApp')
     $scope.filterType = 'date';
     $scope.datePositive = true;
 
-    var getReceipts = function(){
-      ReceiptFactory.success(function(data){
-        $scope.receiptArray = data;
-      });
-    }();
+    // var getReceipts = function(){
+    //   ReceiptFactory.success(function(data){
+    //     $scope.receiptArray = data;
+    //   });
+    // }();
 
     var regetReceipts = function(){
       $http.get('/api/expense/list_receipt/').success(function(data){

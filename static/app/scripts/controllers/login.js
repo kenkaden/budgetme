@@ -2,6 +2,12 @@
 
 angular.module('budgetmeApp')
   .controller('LoginCtrl', function ($scope, $location, $window, djangoAuth, Validate) {
+    var hideToggle = function(){
+      $scope.$emit('hideMenu', {message:"msg from LandingCtrl"});
+    };
+
+    hideToggle();
+
     $scope.model = {'username':'','password':''};
   	$scope.complete = false;
     $scope.login = function(formData){

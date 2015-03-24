@@ -8,23 +8,30 @@
  * Controller of the budgetmeApp
  */
 angular.module('budgetmeApp')
-  .factory('UserProfileFactory', function($http){ 
-    return $http.get('/api/baseinfo/update/');
-    })
-  // .factory('QuoteFactory', function($http){
-  //   return $http.get('http://api.theysaidso.com/qod.json');
-  // })
-  .controller('DashboardCtrl', function ($scope, $http, $timeout, UserProfileFactory, UsernameFactory){ 
+  // .factory('UserProfileFactory', function($http){ 
+  //   return $http.get('/api/baseinfo/update/');
+  //   })
+  .controller('DashboardCtrl', function ($scope, $http, $timeout, UsernameFactory){ 
     $scope.updateStatus = 'Save';
     $scope.incomeAdded = 'Add';
 
-    UserProfileFactory.success(function(data){
-      $scope.budgetArray = data;
-      $scope.income = $scope.budgetArray['income'];
-    })
-    .error(function(err){
-      console.log("No income provided");
-    });
+    // UserProfileFactory.success(function(data){
+    //   $scope.budgetArray = data;
+    //   $scope.income = $scope.budgetArray['income'];
+    // })
+    // .error(function(err){
+    //   console.log("No income provided");
+    // });
+
+    var profile = function(){
+      $http.get('/api/baseinfo/update/').success(function(data){
+        $scope.budgetArray = data;
+        $scope.income = $scope.budgetArray['income'];
+      })
+      .error(function(err){
+        console.log("No income provided");
+      });
+    }();
 
     UsernameFactory.getUser().then(function(data){
         $scope.loginId = data.id;
@@ -139,5 +146,11 @@ angular.module('budgetmeApp')
       regetEnvelopes();
       graph();
     });
+
+    var showToggle = function(){
+      $scope.$emit('showMenu', {message:"msg from LandingCtrl"});
+    };
+
+    showToggle();
 
   }); // End of controller

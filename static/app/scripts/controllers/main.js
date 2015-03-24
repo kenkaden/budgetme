@@ -95,4 +95,17 @@ angular.module('budgetmeApp')
       $scope.$on("djangoAuth.logged_out", function(){
         $scope.loginName ='';
       });
+
+      $scope.$on("hideMenu", function(msg){
+        console.log(msg.message);
+         var myEl = angular.element( document.querySelector( '#wrapper' ) );
+         myEl.toggleClass('toggled');   
+     });
+
+      $scope.$on("showMenu", function(msg){
+        console.log(msg.message);
+         var myEl = angular.element( document.querySelector( '#wrapper' ) );
+         myEl.toggleClass('toggled');   
+     });
+
   }); // end of controller

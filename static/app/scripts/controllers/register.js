@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('budgetmeApp')
-  .controller('RegisterCtrl', function ($scope, $location, djangoAuth, Validate) {
+  .controller('RegisterCtrl', function ($scope, $location, $window, djangoAuth, Validate) {
   	$scope.model = {'username':'','password':'','email':''};
   	$scope.complete = false;
     $scope.register = function(formData){
@@ -13,7 +13,8 @@ angular.module('budgetmeApp')
         	// success case
         	$scope.complete = true;
           alert("Thank you for registering");
-          $location.path("/login");
+          // $location.path("/login");
+          $window.location.href = "#/login";
         },function(data){
         	// error case
         	$scope.errors = data;

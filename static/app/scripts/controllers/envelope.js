@@ -8,13 +8,13 @@
  * Controller of the budgetmeApp
  */
 angular.module('budgetmeApp')
-  .factory('EnvelopeFactory', function($http){ 
-    return $http.get('/api/expense/expense_total/');
-    })
-  .factory('BasicInfoFactory', function($http){ 
-    return $http.get('/api/baseinfo/update/');
-    })
-  .controller('EnvelopeCtrl', function ($scope, $http, $q, $timeout, EnvelopeFactory, UsernameFactory, BasicInfoFactory) {
+  // .factory('EnvelopeFactory', function($http){ 
+  //   return $http.get('/api/expense/expense_total/');
+  //   })
+  // .factory('BasicInfoFactory', function($http){ 
+  //   return $http.get('/api/baseinfo/update/');
+  //   })
+  .controller('EnvelopeCtrl', function ($scope, $http, $q, $timeout, UsernameFactory) {
     $scope.envelopeSaved = "Save";
     $scope.envelopeDeleted = "Delete";
     $scope.pieArray = [];
@@ -23,15 +23,28 @@ angular.module('budgetmeApp')
         $scope.loginId = data.id;
     });
 
-    BasicInfoFactory.success(function(data){
-      $scope.flexmoney = data.flex_money;
-    });
+    // BasicInfoFactory.success(function(data){
+    //   $scope.flexmoney = data.flex_money;
+    // });
 
-    $scope.getEnvelope = function (){
-      EnvelopeFactory.success(function(data){
-        $scope.envelopeArray = data;
-      });
-    }();
+    var BasicInfo = function(){
+      $http.get('/api/baseinfo/update/').success(function(data){
+        $scope.flexmoney = data.flex_money;
+      })
+    }(); 
+
+
+    // $scope.getEnvelope = function (){
+    //   EnvelopeFactory.success(function(data){
+    //     $scope.envelopeArray = data;
+    //   });
+    // }();
+
+    // var getEnvelope = function(){
+    //   $http.get('/api/expense/expense_total/').success(function(data){
+    //     $scope.envelopeArray = data;
+    //   })
+    // }();
 
     var regetEnvelopes = function(){
       $http.get('api/expense/expense_total/').success(function(data){
@@ -175,10 +188,5 @@ angular.module('budgetmeApp')
       regetEnvelopes();
       graph();
     });
-
-    $scope.$on("djangoAuth.logged_out", function(){
-        $scope.flexAllocate ='';
-        $scope.flexleft = '';
-      });
 
   }); //end of controller
