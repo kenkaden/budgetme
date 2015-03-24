@@ -2,6 +2,12 @@
 
 angular.module('budgetmeApp')
   .controller('RegisterCtrl', function ($scope, $location, $window, djangoAuth, Validate) {
+    var hideToggle = function(){
+      $scope.$emit('hideMenu', {message:"msg from RegisterCtrl"});
+    };
+
+    hideToggle();
+
   	$scope.model = {'username':'','password':'','email':''};
   	$scope.complete = false;
     $scope.register = function(formData){

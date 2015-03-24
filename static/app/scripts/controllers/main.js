@@ -102,6 +102,7 @@ angular.module('budgetmeApp')
          myEl.toggleClass('toggled'); 
          var myMenu = angular.element( document.querySelector( '#menuButton' ) );
          myMenu.addClass('hideButton'); 
+         $scope.envelopeArray = [];
      });
 
       $scope.$on("showMenu", function(msg){
@@ -110,6 +111,7 @@ angular.module('budgetmeApp')
          myEl.toggleClass('toggled');
          var myMenu = angular.element( document.querySelector( '#menuButton' ) );
          myMenu.removeClass('hideButton'); 
+         getEnvelopes();
      });
 
   }); // end of controller
