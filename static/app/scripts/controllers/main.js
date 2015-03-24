@@ -99,13 +99,17 @@ angular.module('budgetmeApp')
       $scope.$on("hideMenu", function(msg){
         console.log(msg.message);
          var myEl = angular.element( document.querySelector( '#wrapper' ) );
-         myEl.toggleClass('toggled');   
+         myEl.toggleClass('toggled'); 
+         var myMenu = angular.element( document.querySelector( '#menuButton' ) );
+         myMenu.addClass('hideButton'); 
      });
 
       $scope.$on("showMenu", function(msg){
         console.log(msg.message);
          var myEl = angular.element( document.querySelector( '#wrapper' ) );
-         myEl.toggleClass('toggled');   
+         myEl.toggleClass('toggled');
+         var myMenu = angular.element( document.querySelector( '#menuButton' ) );
+         myMenu.removeClass('hideButton'); 
      });
 
   }); // end of controller

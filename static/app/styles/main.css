@@ -66,6 +66,10 @@
   font-size: 20px;
 }
 
+.hideButton{
+  visibility: hidden;
+}
+
 #cursorSwitch:hover{
   cursor: hand;
   cursor: pointer;
