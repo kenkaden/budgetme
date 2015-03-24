@@ -1,3 +1,5 @@
+<div id="page-content-wrapper">
+<div class="container-fluid">
 <div id="register_view" ng-controller="RegisterCtrl">
     <div ng-if="complete == false">
         <form role="form" ng-if="authenticated != true" name="registerForm" ng-submit="register(registerForm)" novalidate>
@@ -31,3 +33,5 @@
         <div class="alert alert-success">Great!  You've just registered.  You should receive an email shortly with instructions on how to activate your account.</div>
     </div>
 </div>
+</div> <!-- container-fluid -->
+</div> <!-- page-content-wrapper -->

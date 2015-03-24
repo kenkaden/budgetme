@@ -23,18 +23,6 @@
     <script src="bower_components/nvd3/nv.d3.js"></script>
     <script src="bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js"></script>
     <link rel="stylesheet" href="bower_components/nvd3/nv.d3.css"/>
-
-    <!-- landing CSS -->
-    <link href="landingasset/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="landingasset/css/nivo-lightbox.css" rel="stylesheet" />
-    <link href="landingasset/css/nivo-lightbox-theme/default/default.css" rel="stylesheet" type="text/css" />
-    <link href="landingasset/css/owl.carousel.css" rel="stylesheet" media="screen" />
-    <link href="landingasset/css/owl.theme.css" rel="stylesheet" media="screen" />   
-    <link href="landingasset/css/animate.css" rel="stylesheet" />
-    <link href="landingasset/css/style.css" rel="stylesheet">
-    <link href="landingasset/color/default.css" rel="stylesheet">
-    <!-- end landing CSS -->
-
   </head>
   <body ng-app="budgetmeApp">
     <!--[if lt IE 7]>
@@ -66,7 +54,7 @@
                     <a href="#">Contact</a>
                 </li>
                 <li>
-                    <a href="#/logout">Logout</a>
+                    <a href="#/logout" ng-if="loginName">Logout</a>
                 </li>
                 <li>
                     <form name="expenseEntry" class="form-horizontal" novalidate>
@@ -91,11 +79,12 @@
         </div>
         <!-- /#sidebar-wrapper -->
 
-    <span id="menuButton" class="btn glyphicon glyphicon-menu-hamburger toggleMenu" ng-click="toggle()" ng-if="loginName"></span>
+    <!-- <a class="btn btn-default" ng-click="toggle()">Toggle Menu</a> -->
+    <span id="menuButton" class="btn glyphicon glyphicon-menu-hamburger toggleMenu" ng-click="toggle()"></span>
 
-        <!-- <div id="page-content-wrapper"> -->
+        <div id="page-content-wrapper">
             <div ng-view=""></div>
-        <!-- </div> --> <!-- page-content-wrapper end -->
+        </div> <!-- page-content-wrapper end -->
     </div> <!-- wrapper end tag -->
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -137,17 +126,5 @@
         <script src="scripts/controllers/expense.js"></script>
         <script src="scripts/controllers/record.js"></script>
         <!-- endbuild -->
-
-        <!-- landing page js -->
-        <script src="landingasset/js/jquery.easing.min.js"></script> 
-        <script src="landingasset/js/jquery.sticky.js"></script>
-        <script src="landingasset/js/jquery.scrollTo.js"></script>
-        <script src="landingasset/js/stellar.js"></script>
-        <script src="landingasset/js/wow.min.js"></script>
-        <script src="landingasset/js/owl.carousel.min.js"></script>
-        <script src="landingasset/js/nivo-lightbox.min.js"></script>
-        <!-- Custom Theme JavaScript -->
-        <script src="landingasset/js/custom.js"></script>
-        <!-- end landing page -->
 </body>
 </html>

@@ -1,5 +1,28 @@
-<!-- <div class="container-fluid"> -->
-<div id="page-top" data-spy="scroll" data-target=".navbar-custom">
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Lonely - Free bootstrap 3 one page template</title>
+
+    <!-- CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link href="css/nivo-lightbox.css" rel="stylesheet" />
+	<link href="css/nivo-lightbox-theme/default/default.css" rel="stylesheet" type="text/css" />
+	<link href="css/owl.carousel.css" rel="stylesheet" media="screen" />
+    <link href="css/owl.theme.css" rel="stylesheet" media="screen" />	
+	<link href="css/animate.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet">
+	<link href="color/default.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top" data-spy="scroll" data-target=".navbar-custom">
 	<!-- Preloader -->
 	<div id="preloader">
 	  <div id="load"></div>
@@ -9,8 +32,12 @@
     <section id="intro" class="intro">
 	
 		<div class="slogan">
-			<a href="index.html"><img src="landingasset/img/logo.png" alt="" /></a>
-			<h1>Grow your wealth. <br/>Make a plan in 5 seconds.</h1>
+			<a href="index.html"><img src="img/logo.png" alt="" /></a>
+		</div>
+		<div class="page-scroll">
+			<a href="#about">
+				<i class="fa fa-angle-down fa-5x animated"></i>
+			</a>
 		</div>
     </section>
 	<!-- /Section: intro -->
@@ -24,15 +51,17 @@
                          
                                           <!-- Brand and toggle get grouped for better mobile display -->
                                           <div class="navbar-header">
-<!--                                                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
+                                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
                                                 <i class="fa fa-bars"></i>
-                                                </button> -->
+                                                </button>
                                           </div>
                                                       <!-- Collect the nav links, forms, and other content for toggling -->
-                                                      <div id="menu">
-                                                            <ul class="nav navbar-nav">                   
-                                                                  <li><a href="#register">Register</a></li>
-														          <li><a href="#login">Sign in</a></li>                                  
+                                                      <div class="collapse navbar-collapse" id="menu">
+                                                            <ul class="nav navbar-nav">
+                                                                  <li class="active"><a href="#intro">Home</a></li>
+                                                                  <li><a href="#about">About Me</a></li>
+														          <li><a href="#gallery">My gallery</a></li>                                                                                                             
+                                                                  <li><a href="#contact">Talk to me</a></li>
                                                             </ul>
                                                       </div>
                                                       <!-- /.Navbar-collapse -->
@@ -66,7 +95,7 @@
 			<div class="row">
 				<div class="col-md-6">
 				
-					<img src="landingasset/img/img1.jpg" class="img-responsive img-rounded" alt="" />
+					<img src="img/img1.jpg" class="img-responsive img-rounded" alt="" />
 				</div>		
 				<div class="col-md-6">
 					<p><strong>You'll fall in love with me at the first sight</strong></p>
@@ -78,9 +107,6 @@
 					<blockquote>
 					Pri pertinacia elaboraret te, an eirmod delicatissimi nec. Eu liber quodsi maiorum mei. 
 					Civibus perfecto rationibus id his, est noster nostrud aliquando at.
-					<button ng-click="handleClick(test)">Update Envelope</button>
-					<a href="#/login"><button>Login</button></a>
-					<a href="#/register"><button>Register</button></a>
 					</blockquote>
 					<a href="#gallery" class="btn btn-skin btn-lg btn-scroll">See my photos</a>
 				</div>
@@ -255,6 +281,20 @@
 			</div>	
 		</div>
 	</footer>
-</div>
 
-<!-- </div> --> <!-- container-fluid -->
+    <!-- Core JavaScript Files -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.easing.min.js"></script>	
+	<script src="js/jquery.sticky.js"></script>
+	<script src="js/jquery.scrollTo.js"></script>
+	<script src="js/stellar.js"></script>
+	<script src="js/wow.min.js"></script>
+	<script src="js/owl.carousel.min.js"></script>
+	<script src="js/nivo-lightbox.min.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="js/custom.js"></script>
+
+</body>
+
+</html>

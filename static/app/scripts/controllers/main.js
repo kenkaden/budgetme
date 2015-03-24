@@ -57,7 +57,9 @@ angular.module('budgetmeApp')
 
     $scope.toggle = function() {
          var myEl = angular.element( document.querySelector( '#wrapper' ) );
-         myEl.toggleClass('toggled');     
+         myEl.toggleClass('toggled');   
+         var myBar = angular.element( document.querySelector( '#sidebar-wrapper' ) );
+         myBar.removeClass('hideButton');   
     };
 
     $scope.expenseSubmit = function(name, amount, envelope){
@@ -96,21 +98,23 @@ angular.module('budgetmeApp')
         $scope.loginName ='';
       });
 
-      $scope.$on("hideMenu", function(msg){
-        console.log(msg.message);
+      $scope.$on("hideMenu", function(){
          var myEl = angular.element( document.querySelector( '#wrapper' ) );
          myEl.toggleClass('toggled'); 
          var myMenu = angular.element( document.querySelector( '#menuButton' ) );
          myMenu.addClass('hideButton'); 
+         var myBar = angular.element( document.querySelector( '#sidebar-wrapper' ) );
+         myBar.addClass('hideButton'); 
          $scope.envelopeArray = [];
      });
 
-      $scope.$on("showMenu", function(msg){
-        console.log(msg.message);
+      $scope.$on("showMenu", function(){
          var myEl = angular.element( document.querySelector( '#wrapper' ) );
          myEl.toggleClass('toggled');
          var myMenu = angular.element( document.querySelector( '#menuButton' ) );
          myMenu.removeClass('hideButton'); 
+         var myBar = angular.element( document.querySelector( '#sidebar-wrapper' ) );
+         myBar.removeClass('hideButton'); 
          getEnvelopes();
      });
 
