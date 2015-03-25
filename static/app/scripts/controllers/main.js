@@ -100,11 +100,13 @@ angular.module('budgetmeApp')
 
       $scope.$on("hideMenu", function(){
          var myEl = angular.element( document.querySelector( '#wrapper' ) );
-         myEl.toggleClass('toggled'); 
+         myEl.removeClass('toggled'); 
          var myMenu = angular.element( document.querySelector( '#menuButton' ) );
          myMenu.addClass('hideButton'); 
          var myBar = angular.element( document.querySelector( '#sidebar-wrapper' ) );
          myBar.addClass('hideButton'); 
+         var myNav = angular.element( document.querySelector( '#sidebar-nav') );
+         myNav.addClass('hideButton');
          $scope.envelopeArray = [];
      });
 
@@ -115,6 +117,8 @@ angular.module('budgetmeApp')
          myMenu.removeClass('hideButton'); 
          var myBar = angular.element( document.querySelector( '#sidebar-wrapper' ) );
          myBar.removeClass('hideButton'); 
+         var myNav = angular.element( document.querySelector( '#sidebar-nav') );
+         myNav.removeClass('hideButton');
          getEnvelopes();
      });
 

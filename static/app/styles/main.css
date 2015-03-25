@@ -37,7 +37,7 @@
 }
 
 .formAlert{
-  color:red;
+  color:#f83d31;
 }
 
 .table thead>tr>th{
@@ -49,14 +49,14 @@
 }
 
 .trashCan {
-  color: #7B1318;
+  color: #d63076;
   margin-left: 30px;
   cursor: hand;
   cursor: pointer;
 }
 
 .pencilEdit {
-  color: #0047B2;
+  color: #2aa4c2;
   margin-left: 5px;
   cursor: hand;
   cursor: pointer;
@@ -67,6 +67,7 @@
 }
 
 .hideButton{
+  display: none;
   visibility: hidden;
 }
 
@@ -77,4 +78,8 @@
 
 .articles{
   font-weight: 400;
+}
+
+.sidelogo{
+  width:200px;
 }

@@ -177,7 +177,7 @@ angular.module('budgetmeApp')
       };
     }
 
-    var colorArray = ['#FF00CC', '#660000', '#CC0000', '#FF6666', '#FF3333', '#FF6666', '#FFE6E6'];
+    var colorArray = ['#FS8B3D', '#526684', '#E75DSC', '#965E89', '#3678A3', '#FAA819'];
     $scope.colorFunction = function() {
       return function(d, i) {
           return colorArray[i];
