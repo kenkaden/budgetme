@@ -25,15 +25,10 @@
             <div class="alert alert-danger" ng-repeat="error in errors.email">{{error}}</div>
             <button  ng-disabled="registerForm.$invalid" ng-hide="authenticated" type="submit" class="btn btn-primary">Register</button>
         </form>
-        <p ng-show="errors" class="formAlert">Please fix the following</p>
-        <ul ng-model="errors" ng-show="errors">
-            <li class="formAlert">{{errors.__all__}}</li>
-        </ul>
-        <br>
         <p ng-if="authenticated">You are already logged in!  You don't need to register.</p>
     </div>
     <div ng-if="complete == true">
-        <div class="alert alert-success">Great!  You've just registered.  You should receive an email shortly with instructions on how to activate your account.</div>
+        <div class="alert alert-success">Great!  You've just registered.  Click here to <a href="#/login">login</a></div>
     </div>
 </div>
 </div> <!-- container-fluid -->

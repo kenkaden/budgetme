@@ -18,9 +18,9 @@ angular.module('budgetmeApp')
         .then(function(data){
         	// success case
         	$scope.complete = true;
-          alert("Thank you for registering");
+          // alert("Thank you for registering");
           // $location.path("/login");
-          $window.location.href = "#/login";
+          // $window.location.href = "#/login";
         },function(data){
         	// error case
         	$scope.errors = data;
