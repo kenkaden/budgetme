@@ -100,7 +100,7 @@ angular.module('budgetmeApp')
 
       $scope.$on("hideMenu", function(){
          var myEl = angular.element( document.querySelector( '#wrapper' ) );
-         myEl.removeClass('toggled'); 
+         myEl.toggleClass('toggled'); 
          var myMenu = angular.element( document.querySelector( '#menuButton' ) );
          myMenu.addClass('hideButton'); 
          var myBar = angular.element( document.querySelector( '#sidebar-wrapper' ) );
