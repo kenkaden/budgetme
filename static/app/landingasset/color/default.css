@@ -29,11 +29,11 @@ form#contact-form input:focus,form#contact-form select:focus,form#contact-form t
 }
 
 footer {
-    background-color: #d43076;
+    background-color: #2aa4c2;
 }
 
 .btn-skin {
   color: #fff;
-  background-color: #d43076;
-  border-color: #d43076;
+  background-color: #2aa4c2;
+  border-color:#2aa4c2;
 }
