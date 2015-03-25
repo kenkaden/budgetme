@@ -84,8 +84,8 @@ angular.module('budgetmeApp')
         "income": parseFloat(($scope.incomeAmountNew).toFixed(2)),
         "fixed_cost": parseFloat(($scope.incomeAmountNew * 0.6).toFixed(2)),
         "investment": parseFloat(($scope.incomeAmountNew * 0.1).toFixed(2)),
-        "savings": parseFloat(($scope.incomeAmountNew * 0.1).toFixed(2)),
-        "flex_money": parseFloat(($scope.incomeAmountNew * 0.2).toFixed(2)),
+        "savings": parseFloat(($scope.incomeAmountNew * 0.2).toFixed(2)),
+        "flex_money": parseFloat(($scope.incomeAmountNew * 0.1).toFixed(2)),
         "user": $scope.loginId
       }
 
