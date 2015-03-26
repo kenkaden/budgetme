@@ -83,3 +83,9 @@
 .sidelogo{
   width:200px;
 }
+
+#login_view, #register_view{
+  background: linear-gradient(to bottom, #73cbce, #fbf8cb);
+}
+
+
